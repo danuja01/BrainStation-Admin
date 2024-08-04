@@ -17,7 +17,8 @@ export const theme = {
         red: "#FE0000",
         blue: "#0B54A0",
         green: "#02AB31",
-        paper: "#FDF5EA"
+        paper: "#FDF5EA",
+        gray: "E0E5E6"
       }
     }
   }
