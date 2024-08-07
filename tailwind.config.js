@@ -1,3 +1,4 @@
+// tailwind.config.js
 import defaultTheme from "tailwindcss/defaultTheme";
 
 /** @type {import('tailwindcss').Config} */
@@ -18,8 +19,11 @@ export const theme = {
         blue: "#0B54A0",
         green: "#02AB31",
         paper: "#FDF5EA",
-        gray: "E0E5E6"
+        gray: "#E0E5E6"
       }
+    },
+    backgroundImage: {
+      "horizontal-gradient": "linear-gradient(to right, #0B54A0, #074690, #002E74)"
     }
   }
 };
