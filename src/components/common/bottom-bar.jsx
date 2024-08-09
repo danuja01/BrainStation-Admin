@@ -34,13 +34,13 @@ const BottomBar = () => {
       "
       >
         <button onClick={handlePrevSlide} disabled={currentSlideIndex === 0}>
-          <LeftArrowIcon color="black" />
+          <LeftArrowIcon color={currentSlideIndex === 0 ? "gray" : "black"} />
         </button>
         <span className="lowercase text-black px-6">
           {currentSlideIndex + 1} of {totalSlides}
         </span>
         <button onClick={handleNextSlide} disabled={currentSlideIndex === totalSlides - 1}>
-          <RightArrowIcon color="black" />
+          <RightArrowIcon color={currentSlideIndex === totalSlides - 1 ? "gray" : "black"} />
         </button>
       </div>
     </div>
