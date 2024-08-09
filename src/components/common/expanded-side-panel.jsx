@@ -1,9 +1,14 @@
 import Scrollbars from "react-custom-scrollbars-2";
+import { useDispatch, useSelector } from "react-redux";
+import { switchLecture } from "@/store/lecturesSlice";
 import ChapterCard from "../cards/chapter-card";
 import LastActivityCard from "../cards/last-activity-card";
 import Logo from "./logo";
 
 const ExpandedSidePanel = ({ isVisible, setIsVisible }) => {
+  const dispatch = useDispatch();
+  const lectures = useSelector((state) => state.lectures.lectures);
+
   const togglePanel = () => {
     setIsVisible(!isVisible);
   };
@@ -41,12 +46,14 @@ const ExpandedSidePanel = ({ isVisible, setIsVisible }) => {
             className="rounded-lg"
           >
             <div className="px-2">
-              <ChapterCard />
-              <ChapterCard />
-              <ChapterCard />
-              <ChapterCard />
-              <ChapterCard />
-              <ChapterCard />
+              {lectures.map((lecture) => (
+                <ChapterCard
+                  key={lecture.id}
+                  id={lecture.id}
+                  title={lecture.title}
+                  onClick={() => dispatch(switchLecture(lecture.id))} // Dispatch switchLecture on click
+                />
+              ))}
             </div>
           </Scrollbars>
         </div>
