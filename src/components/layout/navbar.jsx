@@ -16,7 +16,7 @@ const Navbar = () => {
     >
       {/* Monitoring status */}
       <div className="flex items-center gap-1">
-        <div className="rounded-full bg-red-600 w-3 h-3 mb-0.5" />
+        <div className="rounded-full bg-red-600 w-3 h-3 mb-0.5" style={{ animation: "blink 10s infinite" }} />{" "}
         <div className="font-josfin-sans text-sm">Monitoring.</div>
       </div>
       <div className="flex items-center gap-6 select-none">
