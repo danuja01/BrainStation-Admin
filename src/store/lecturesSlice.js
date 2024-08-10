@@ -5,7 +5,7 @@ const initialState = {
   lectures: lectures,
   currentLectureId: 1,
   currentSlideId: 1,
-  currentView: "quiz"
+  currentView: "lecturer"
 };
 
 const lecturesSlice = createSlice({

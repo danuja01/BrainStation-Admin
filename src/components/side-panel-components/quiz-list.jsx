@@ -1,9 +1,12 @@
-import { useDispatch } from "react-redux";
+import Scrollbars from "react-custom-scrollbars-2";
+import { useDispatch, useSelector } from "react-redux";
 import { switchView } from "@/store/lecturesSlice";
+import QuizCard from "../cards/quiz-card";
 import LeftArrowLongIcon from "../icons/left-arrow-long-icon";
 
 const QuizList = () => {
   const dispatch = useDispatch();
+  const quizzes = useSelector((state) => state.quizzes.quizzes);
 
   const handleBackClick = () => {
     dispatch(switchView("lecturer"));
@@ -16,17 +19,33 @@ const QuizList = () => {
         <button className="bg-primary-gray-light max-w-fit p-2 rounded-full" onClick={handleBackClick}>
           <LeftArrowLongIcon size={3} />
         </button>
-        <h3 className="font-josfin-sans text-lg uppercase opacity-50">All Quizes</h3>
+        <h3 className="font-josfin-sans text-md uppercase opacity-50">All Quizes</h3>
       </div>
       <div className="flex flex-col gap-2">
         <h4 className="text-lg font-semibold font-inter">Comprehensive Guide to Data Structures and Algorithms</h4>
-        <p className="text-sm font-light">10 total quizes</p>
+        <p className="text-sm font-light">{quizzes.length} total quizzes</p>
       </div>
       <div className="flex justify-end mt-2 pb-4 border-b">
         <button className="uppercase text-xs text-white font- bg-horizontal-gradient py-[0.3rem] px-4 rounded-lg">
           Practice
         </button>
       </div>
+      {/* Quizzes */}
+      <Scrollbars
+        autoHide
+        autoHideTimeout={1000}
+        autoHideDuration={200}
+        autoHeight
+        autoHeightMin={0}
+        autoHeightMax={"calc(100vh - 280px)"}
+        thumbMinSize={30}
+        universal={true}
+        className="rounded-lg"
+      >
+        {quizzes.map((quiz, index) => (
+          <QuizCard key={index} question={quiz.question} answer={quiz.answer} />
+        ))}
+      </Scrollbars>
     </div>
   );
 };

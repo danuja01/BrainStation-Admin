@@ -1,12 +1,18 @@
 import Scrollbars from "react-custom-scrollbars-2";
 import { useDispatch, useSelector } from "react-redux";
 import { switchLecture } from "@/store/lecturesSlice";
+import { setQuizzesForLecture } from "@/store/quizzesSlice";
 import ChapterCard from "../cards/chapter-card";
 import LastActivityCard from "../cards/last-activity-card";
 
 const LectureList = () => {
   const dispatch = useDispatch();
   const lectures = useSelector((state) => state.lectures.lectures);
+
+  const handleChapterClick = (lectureId) => {
+    dispatch(switchLecture(lectureId));
+    dispatch(setQuizzesForLecture(lectureId));
+  };
 
   return (
     <div className="p-2 flex-1 overflow-hidden">
@@ -33,9 +39,7 @@ const LectureList = () => {
                 key={lecture.id}
                 id={lecture.id}
                 title={lecture.title}
-                onClick={() => {
-                  dispatch(switchLecture(lecture.id));
-                }}
+                onClick={() => handleChapterClick(lecture.id)}
               />
             ))}
           </div>
