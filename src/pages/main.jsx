@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import ContentCard from "@/components/cards/content-card";
-import BottomBar from "@/components/common/bottom-bar";
+import BottomBar from "@/components/layout/bottom-bar";
 
 const Main = () => {
   const currentSlide = useSelector((state) => {

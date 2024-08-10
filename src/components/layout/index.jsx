@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
-import ExpandedSidePanel from "../common/expanded-side-panel";
-import Navbar from "../common/navbar";
-import Sidebar from "../common/side-panel";
+import ExpandedSidePanel from "./expanded-side-panel";
+import Navbar from "./navbar";
+import Sidebar from "./side-panel";
 
 const DefaultLayout = () => {
   const [isPanelVisible, setIsPanelVisible] = useState(true);
