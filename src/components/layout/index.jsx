@@ -1,11 +1,20 @@
-import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Outlet, useLocation } from "react-router-dom";
 import ExpandedSidePanel from "./expanded-side-panel";
 import Navbar from "./navbar";
 import Sidebar from "./side-panel";
 
 const DefaultLayout = () => {
   const [isPanelVisible, setIsPanelVisible] = useState(true);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === "/") {
+      setIsPanelVisible(false);
+    } else {
+      setIsPanelVisible(true);
+    }
+  }, [location.pathname]);
 
   return (
     <div className="bg-primary-blue h-screen p-3">

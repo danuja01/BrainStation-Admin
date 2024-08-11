@@ -6,6 +6,7 @@ import QuizList from "../side-panel-components/quiz-list";
 // Import QuizList
 
 const ExpandedSidePanel = ({ isVisible, setIsVisible }) => {
+  // eslint-disable-next-line no-unused-vars
   const togglePanel = () => {
     setIsVisible(!isVisible);
   };
@@ -21,10 +22,6 @@ const ExpandedSidePanel = ({ isVisible, setIsVisible }) => {
     >
       <div className="border-b py-2 flex items-center justify-between px-5">
         <Logo />
-        <div>
-          {/* Button to toggle panel visibility */}
-          <button onClick={togglePanel}>X</button>
-        </div>
       </div>
       {/* Conditionally render LectureList or QuizList */}
       {currentView === "lecturer" ? <LectureList /> : <QuizList />}
