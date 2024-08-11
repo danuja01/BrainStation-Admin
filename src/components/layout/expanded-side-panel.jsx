@@ -3,20 +3,14 @@ import Logo from "../common/logo";
 import LectureList from "../side-panel-components/lecturer-list";
 import QuizList from "../side-panel-components/quiz-list";
 
-// Import QuizList
-
+// eslint-disable-next-line no-unused-vars
 const ExpandedSidePanel = ({ isVisible, setIsVisible }) => {
-  // eslint-disable-next-line no-unused-vars
-  const togglePanel = () => {
-    setIsVisible(!isVisible);
-  };
-
   const currentView = useSelector((state) => state.lectures.currentView);
 
   return (
     <div
-      className={`h-full border-r flex flex-col  backdrop:select-none z-[99] transition-transform duration-300 ease-in-out ${
-        isVisible ? "translate-x-0 w-80" : "-translate-x-full w-0 hidden"
+      className={`h-full border-r flex flex-col bg-white backdrop:select-none z-[99] transition-all duration-300 ease-in-out ${
+        isVisible ? "translate-x-0 w-80 opacity-100" : "-translate-x-1 w-0 opacity-0"
       }`}
       style={{ boxShadow: "1px 70px 5.8px rgba(0, 0, 0, 0.20)" }}
     >
