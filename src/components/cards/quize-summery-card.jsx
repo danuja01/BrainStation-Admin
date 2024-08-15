@@ -22,7 +22,7 @@ const QuizSummeryCard = () => {
         </div>
       </div>
       <p className="absolute bottom-2 text-xs text-black left-1/2 transform -translate-x-1/2 font-inter w-[80%] text-center">
-        Today's Recall, Every Deck in Sync.
+        Today&apos;s Recall, Every Deck in Sync.
       </p>
     </div>
   );

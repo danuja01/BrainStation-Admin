@@ -7,7 +7,7 @@ import QuizList from "../side-panel-components/quiz-list";
 
 // Ensure this is imported
 
-const ExpandedSidePanel = ({ isVisible, setIsVisible }) => {
+const ExpandedSidePanel = ({ isVisible }) => {
   const currentView = useSelector((state) => state.lectures.currentView);
 
   return (
