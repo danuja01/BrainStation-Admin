@@ -1,9 +1,12 @@
+// ExpandedSidePanel.js
 import { useSelector } from "react-redux";
 import Logo from "../common/logo";
 import LectureList from "../side-panel-components/lecturer-list";
+import QuizDeckList from "../side-panel-components/quiz-deck-list";
 import QuizList from "../side-panel-components/quiz-list";
 
-// eslint-disable-next-line no-unused-vars
+// Ensure this is imported
+
 const ExpandedSidePanel = ({ isVisible, setIsVisible }) => {
   const currentView = useSelector((state) => state.lectures.currentView);
 
@@ -14,11 +17,13 @@ const ExpandedSidePanel = ({ isVisible, setIsVisible }) => {
       }`}
       style={{ boxShadow: "1px 70px 5.8px rgba(0, 0, 0, 0.20)" }}
     >
-      <div className="border-b py-2 flex items-center justify-between px-5">
+      <div className="border-b py-[0.72rem] flex items-center justify-between px-5">
         <Logo />
       </div>
-      {/* Conditionally render LectureList or QuizList */}
-      {currentView === "lecturer" ? <LectureList /> : <QuizList />}
+      {/* Conditionally render components based on the current view */}
+      {currentView === "lecturer" && <LectureList />}
+      {currentView === "quiz" && <QuizList />}
+      {currentView === "quiz-deck" && <QuizDeckList />}
     </div>
   );
 };

@@ -1,9 +1,10 @@
+// lecturesSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 import lectures from "../../public/assets/data/lectures";
 
 const initialState = {
   lectures: lectures,
-  currentModuleId: null, // Added to track the current module
+  currentModuleId: null,
   currentLectureId: 1,
   currentSlideId: 1,
   currentView: "lecturer"
@@ -15,10 +16,9 @@ const lecturesSlice = createSlice({
   reducers: {
     setCurrentModule: (state, action) => {
       state.currentModuleId = action.payload;
-      // Filter lectures based on the selected moduleId if you have such a structure
       state.lectures = lectures.filter((lecture) => lecture.moduleId === state.currentModuleId);
-      state.currentLectureId = state.lectures[0].id; // Set the first lecture in the module as the current one
-      state.currentSlideId = state.lectures[0].slides[0].id; // Set the first slide in the first lecture
+      state.currentLectureId = state.lectures[0].id;
+      state.currentSlideId = state.lectures[0].slides[0].id;
     },
     switchLecture: (state, action) => {
       state.currentLectureId = action.payload;
@@ -31,10 +31,13 @@ const lecturesSlice = createSlice({
     },
     switchView: (state, action) => {
       state.currentView = action.payload;
+    },
+    switchToQuizDeck: (state) => {
+      state.currentView = "quiz-deck";
     }
   }
 });
 
-export const { setCurrentModule, switchLecture, switchSlide, switchView } = lecturesSlice.actions;
+export const { setCurrentModule, switchLecture, switchSlide, switchView, switchToQuizDeck } = lecturesSlice.actions;
 
 export default lecturesSlice.reducer;
