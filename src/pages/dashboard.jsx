@@ -23,7 +23,7 @@ const Dashboard = () => {
     <div className="p-4 px-6">
       {/* header */}
       <div className="flex justify-between items-center">
-        <h1 className="font-inter font-bold text-2xl">Welcome, Dinuja!</h1>
+        <h1 className="font-inter font-bold text-2xl">All Modules</h1>
         <button
           className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           onClick={goToAllModules}
@@ -37,15 +37,13 @@ const Dashboard = () => {
           <CourseCard key={course.courseId} courseId={course.courseId} title={course.title} />
         ))}
         <div
-          className="bg-stone-100 select-none w-[26rem] h-[25rem] p-4 flex flex-col items-center justify-center text-center rounded-xl hover:opacity-75 cursor-pointer"
+          className="bg-blue-100 select-none w-[26rem] h-[25rem] flex flex-col items-center justify-center text-center rounded-xl"
           style={{ boxShadow: "0px 0px 4px rgba(0, 0, 0, 0.24)" }}
         >
-          <button
-            className="bg-blue-900 hover:bg-blue-700 text-5xl text-white font-bold py-2 px-4 rounded-full"
-            onClick={togglePopup}
-          >
+          <button className="text-blue-900 text-6xl font-bold" onClick={togglePopup}>
             +
           </button>
+          <p className="text-blue-900 font-bold">Add New Module</p>
         </div>
       </div>
       {showPopup && <AddModule onClose={togglePopup} />}

@@ -1,7 +1,6 @@
 import { useDispatch } from "react-redux";
 
-// eslint-disable-next-line no-unused-vars
-const ModuleCard = ({ courseId, title, onClick }) => {
+const ModuleCard = ({ title, onClick }) => {
   // eslint-disable-next-line no-unused-vars
   const dispatch = useDispatch();
 
@@ -14,16 +13,6 @@ const ModuleCard = ({ courseId, title, onClick }) => {
       {/* Title */}
       <div className="flex-grow flex items-center">
         <p className="text-[1.15rem] font-bold ">{title}</p>
-      </div>
-
-      {/* Donut Chart */}
-      <div className="flex-grow justify-between w-full">
-        <button className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-7 rounded-full">
-          Lectures
-        </button>
-        <button className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-7 rounded-full">
-          Quizes
-        </button>
       </div>
     </div>
   );
