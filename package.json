@@ -1,10 +1,9 @@
 {
-  "name": "arqs-frontend-admin",
+  "name": "BrainStation-admin",
   "private": true,
   "version": "0.0.0",
-  "description": "ARQS constructions website backend",
+  "description": "",
   "homepage": ".",
-  "author": "Danuja Jayasuriya",
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",

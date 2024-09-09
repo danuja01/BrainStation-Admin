@@ -1,12 +1,24 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
 const BookIcon = () => {
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleClick = (e) => {
+    if(location.pathname.includes('/admin-portal')) {
+      e.preventDefault();
+      navigate('/admin-portal/lecture');
+    }
+  }
+
   return (
     <NavLink
-      to="/study"
+      to="/admin-portal/lecture"
       className={({ isActive }) =>
         `flex flex-col items-center rounded-md p-4 hover:bg-gray-300 ${isActive ? "bg-primary-blue text-white" : ""}`
       }
+      onClick={handleClick}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
