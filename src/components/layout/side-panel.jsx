@@ -1,7 +1,7 @@
+import AnalyticsIcon from "../icons/side-panel-icons/analytics";
 import BookIcon from "../icons/side-panel-icons/book";
 import HomeIcon from "../icons/side-panel-icons/home";
 import QuizzIcon from "../icons/side-panel-icons/quize";
-import AnalyticsIcon from "../icons/side-panel-icons/analytics";
 
 const Sidebar = () => {
   return (

@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from "react";
 
 const ManualAddQuizPopup = ({ onClose }) => {
   const [formData, setFormData] = useState({
-    question: '',
-    answer: '',
-    distractor1: '',
-    distractor2: '',
-    distractor3: ''
+    question: "",
+    answer: "",
+    distractor1: "",
+    distractor2: "",
+    distractor3: ""
   });
 
   const handleInputChange = (e) => {
@@ -16,19 +16,19 @@ const ManualAddQuizPopup = ({ onClose }) => {
 
   const handleSubmit = () => {
     // Logic for handling form submission, e.g., saving the quiz data
-    console.log('Submitted Quiz:', formData);
+    console.log("Submitted Quiz:", formData);
     onClose(); // Close the popup after submission
   };
 
   const handleAddAnother = () => {
     // Logic to handle adding another quiz without closing the popup
-    console.log('Adding another Quiz:', formData);
+    console.log("Adding another Quiz:", formData);
     setFormData({
-      question: '',
-      answer: '',
-      distractor1: '',
-      distractor2: '',
-      distractor3: ''
+      question: "",
+      answer: "",
+      distractor1: "",
+      distractor2: "",
+      distractor3: ""
     });
   };
 

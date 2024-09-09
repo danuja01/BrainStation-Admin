@@ -2,17 +2,17 @@ import { Suspense } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { DefaultLayout, Loader } from "@/components";
 import NotFound from "@/pages/404";
-import Dashboard from "@/pages/dashboard";
-import AllQuiz from "@/pages/all-quiz";
-import FlaggedQuiz from "@/pages/flagged-quiz";
-import AllModules from "@/pages/all-modules";
-import Users from "@/pages/users";
-import Profile from "@/pages/profiles";
-import MetricsPage from "@/pages/metrics";
-import Lecture from "@/pages/lecture";
 import AddLecture from "@/pages/add-lecture";
+import AllModules from "@/pages/all-modules";
+import AllQuiz from "@/pages/all-quiz";
+import Dashboard from "@/pages/dashboard";
+import FlaggedQuiz from "@/pages/flagged-quiz";
+import Lecture from "@/pages/lecture";
 import Login from "@/pages/login";
-import Signup from "@/pages/signup"
+import MetricsPage from "@/pages/metrics";
+import Profile from "@/pages/profiles";
+import Signup from "@/pages/signup";
+import Users from "@/pages/users";
 
 // Ensure Loader is imported correctly
 
@@ -81,7 +81,7 @@ const coreRoutes = [
     path: "admin-portal/add-lecture",
     title: "add-lecture",
     component: AddLecture
-  },
+  }
 ];
 
 const CustomRoutes = () => {

@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 
 // eslint-disable-next-line no-unused-vars
-const ModuleCard = ({ courseId, title,onClick}) => {
+const ModuleCard = ({ courseId, title, onClick }) => {
   // eslint-disable-next-line no-unused-vars
   const dispatch = useDispatch();
 
@@ -18,8 +18,12 @@ const ModuleCard = ({ courseId, title,onClick}) => {
 
       {/* Donut Chart */}
       <div className="flex-grow justify-between w-full">
-        <button class="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-7 rounded-full">Lectures</button>
-        <button class="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-7 rounded-full">Quizes</button>
+        <button className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-7 rounded-full">
+          Lectures
+        </button>
+        <button className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-7 rounded-full">
+          Quizes
+        </button>
       </div>
     </div>
   );
