@@ -4,7 +4,7 @@ import DeleteIcon from "../icons/delete-icon";
 import EditIcon from "../icons/edit-icon";
 import EditPopup from "../popups/edit-quizzes";
 
-const AllQuizCard = ({ questionId, question, answer, distractors }) => {
+const AllQuizCard = ({ questionId, questionNumber, question, answer, distractors, disableBtns = false }) => {
   const location = useLocation();
   const [showEditPopup, setShowEditPopup] = useState(false);
 
@@ -20,10 +20,11 @@ const AllQuizCard = ({ questionId, question, answer, distractors }) => {
 
   return (
     <div
-      className={`relative rounded-xl p-4 mx-1.5 my-4 ${isSpecialPage ? "bg-red-100" : "bg-white"}`}
+      className={`relative rounded-xl p-8 mx-1.5 my-4 ${isSpecialPage ? "bg-red-100" : "bg-white"}`}
       style={{ boxShadow: "0px 0px 4.4px rgba(0, 0, 0, 0.15)" }}
     >
       <p className="uppercase text-green-500 font-semibold absolute top-2 right-3">AI Generated</p>
+      <p className="absolute top-2 left-3 text-xs font-semibold text-gray-400">{questionNumber}</p>
       <p className="font-semibold text-lg">
         Question: <span className="text-md font-normal">{question}</span>
       </p>
@@ -36,18 +37,24 @@ const AllQuizCard = ({ questionId, question, answer, distractors }) => {
           <li key={index}>{distractor}</li>
         ))}
       </ul>
-      <div className="flex justify-end">
-        <EditIcon onClick={handleEditClick} />
-        <DeleteIcon />
-      </div>
-      {showEditPopup && (
-        <EditPopup
-          onClose={handleCloseEditPopup}
-          questionId={questionId}
-          question={question}
-          answer={answer}
-          distractors={distractors}
-        />
+      {!disableBtns && (
+        <>
+          <div className="absolute bottom-0 right-0">
+            <div className="flex">
+              <EditIcon onClick={handleEditClick} />
+              <DeleteIcon />
+            </div>
+          </div>
+          {showEditPopup && (
+            <EditPopup
+              onClose={handleCloseEditPopup}
+              questionId={questionId}
+              question={question}
+              answer={answer}
+              distractors={distractors}
+            />
+          )}
+        </>
       )}
     </div>
   );

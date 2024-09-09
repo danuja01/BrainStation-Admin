@@ -9,7 +9,7 @@ const DefaultLayout = () => {
         <Sidebar />
         <div className="flex-1 flex flex-col">
           <Navbar />
-          <div className="flex-1 overflow-auto">
+          <div className="flex-1 overflow-hidden">
             <Outlet />
           </div>
         </div>

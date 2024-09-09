@@ -33,7 +33,7 @@ const ManualAddQuizPopup = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[100]">
       <div className="min-w-80 w-1/3 bg-white p-8 rounded-lg shadow-lg">
         <h2 className="text-xl font-bold mb-4">Add New Quizzes</h2>
         <div className="mb-4">

@@ -43,7 +43,7 @@ const coreRoutes = [
     component: Dashboard
   },
   {
-    path: "admin-portal/all-quiz",
+    path: "admin-portal/quizzes/:lectureId",
     title: "all-quiz",
     component: AllQuiz
   },
@@ -73,7 +73,7 @@ const coreRoutes = [
     component: MetricsPage
   },
   {
-    path: "admin-portal/lecture",
+    path: "/admin-portal/module/:moduleId",
     title: "lecture",
     component: Lecture
   },
