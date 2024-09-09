@@ -1,16 +1,15 @@
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
 const BookIcon = () => {
-
   const location = useLocation();
   const navigate = useNavigate();
 
   const handleClick = (e) => {
-    if(location.pathname.includes('/admin-portal')) {
+    if (location.pathname.includes("/admin-portal")) {
       e.preventDefault();
-      navigate('/admin-portal/lecture');
+      navigate("/admin-portal/lecture");
     }
-  }
+  };
 
   return (
     <NavLink

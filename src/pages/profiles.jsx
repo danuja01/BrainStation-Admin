@@ -1,14 +1,12 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import ProfileLayout from "@/components/layout/profile";
 
 const ProfilePage = () => {
-
   const navigate = useNavigate();
 
   const navToMetrics = () => {
     navigate("/admin-portal/metrics");
-  }
+  };
 
   // Sample data
   const userData = {
@@ -16,7 +14,7 @@ const ProfilePage = () => {
     profilePhoto: "https://example.com/sample-photo.jpg",
     userName: "Oshadha Thawalampola",
     email: "email@gmail.com",
-    organization: "Sri Lanka Institute of Information Technology",
+    organization: "Sri Lanka Institute of Information Technology"
   };
 
   return (

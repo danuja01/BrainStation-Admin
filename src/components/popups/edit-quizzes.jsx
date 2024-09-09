@@ -1,5 +1,3 @@
-import React from 'react';
-
 const EditPopup = ({ onClose }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
@@ -11,7 +9,7 @@ const EditPopup = ({ onClose }) => {
             <input
               type="text"
               id="question"
-              placeholder='Enter Question'
+              placeholder="Enter Question"
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
@@ -19,7 +17,7 @@ const EditPopup = ({ onClose }) => {
             <input
               type="text"
               id="answer"
-              placeholder='Enter Answer'
+              placeholder="Enter Answer"
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
@@ -49,7 +47,7 @@ const EditPopup = ({ onClose }) => {
             <button
               type="button"
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
-              onClick={() => console.log('Save changes')}
+              onClick={() => console.log("Save changes")}
             >
               Save
             </button>
@@ -62,10 +60,7 @@ const EditPopup = ({ onClose }) => {
             </button>
           </div>
         </form>
-        <button
-          className="text-red-600 absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-          onClick={onClose}
-        >
+        <button className="text-red-600 absolute top-2 right-2 text-gray-500 hover:text-gray-700" onClick={onClose}>
           X
         </button>
       </div>

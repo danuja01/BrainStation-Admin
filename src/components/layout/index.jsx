@@ -1,20 +1,8 @@
-import { useEffect, useState } from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Navbar from "./navbar";
 import Sidebar from "./side-panel";
 
 const DefaultLayout = () => {
-  const [isPanelVisible, setIsPanelVisible] = useState(true);
-  const location = useLocation();
-
-  useEffect(() => {
-    if (location.pathname === "/") {
-      setIsPanelVisible(false);
-    } else {
-      setIsPanelVisible(true);
-    }
-  }, [location.pathname]);
-
   return (
     <div className="bg-primary-blue h-screen p-3">
       <div className="bg-white h-full w-full rounded-xl flex">

@@ -1,11 +1,10 @@
-import React from "react";
 import AllModulesCard from "@/components/cards/all-module-card";
 
 // Sample data, ensure you have correct data structure
 const modules = [
-  { moduleId: 1, module: "Module 01", description: "description 01"},
-  { moduleId: 2, module: "Module 02", description: "description 02"},
-  { moduleId: 3, module: "Module 03", description: "description 03"}
+  { moduleId: 1, module: "Module 01", description: "description 01" },
+  { moduleId: 2, module: "Module 02", description: "description 02" },
+  { moduleId: 3, module: "Module 03", description: "description 03" }
 ];
 
 const AllModules = () => {

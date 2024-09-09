@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import UserCard from "@/components/cards/user-card";
 import FilterIcon from "@/components/icons/filter-icon";

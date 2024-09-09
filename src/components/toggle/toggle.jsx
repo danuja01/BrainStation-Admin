@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 const ToggleTabs = () => {
   const [activeTab, setActiveTab] = useState("Emotion Tracker");
@@ -7,7 +7,7 @@ const ToggleTabs = () => {
     { name: "Emotion Tracker" },
     { name: "User Metrics" },
     { name: "Session Logs" },
-    { name: "System Usage" },
+    { name: "System Usage" }
   ];
 
   return (
@@ -21,9 +21,7 @@ const ToggleTabs = () => {
           <button
             onClick={() => setActiveTab(tab.name)}
             className={`py-1 px-4 rounded-full mx-1 ${
-              activeTab === tab.name
-                ? "bg-blue-900 text-white"
-                : "bg-white text-black"
+              activeTab === tab.name ? "bg-blue-900 text-white" : "bg-white text-black"
             }`}
           >
             {tab.name}

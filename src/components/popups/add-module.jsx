@@ -1,5 +1,3 @@
-import React from 'react';
-
 const AddModule = ({ onClose }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
@@ -11,7 +9,7 @@ const AddModule = ({ onClose }) => {
             <input
               type="text"
               id="module"
-              placeholder='Enter Module Name'
+              placeholder="Enter Module Name"
               className="border-black appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
@@ -19,7 +17,7 @@ const AddModule = ({ onClose }) => {
             <input
               type="text"
               id="code"
-              placeholder='Enter Module Code'
+              placeholder="Enter Module Code"
               className="border-black appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
@@ -28,7 +26,7 @@ const AddModule = ({ onClose }) => {
               type="text"
               id="description"
               rows="5"
-              placeholder='Enter a description'
+              placeholder="Enter a description"
               className="border-black appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
@@ -36,16 +34,13 @@ const AddModule = ({ onClose }) => {
             <button
               type="button"
               className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded mr-2"
-              onClick={() => console.log('Added Module')}
+              onClick={() => console.log("Added Module")}
             >
               Add
             </button>
           </div>
         </form>
-        <button
-          className="text-red-600 absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-          onClick={onClose}
-        >
+        <button className="text-red-600 absolute top-2 right-2 text-gray-500 hover:text-gray-700" onClick={onClose}>
           X
         </button>
       </div>
