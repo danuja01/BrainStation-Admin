@@ -3,42 +3,29 @@ import { useNavigate } from "react-router-dom";
 import QuizCard from "@/components/cards/all-quiz-card";
 import AddQuizPopup from "@/components/popups/add-quizzes";
 
+// Updated quiz data structure to match the format
 const quizes = [
   {
-    questionId: 1,
-    question: "What is a stack and give an example?",
-    answer:
-      "A stack is a Last In, First Out (LIFO) data structure. Example: managing function calls in a programming language.",
-    distractor1:
-      "A stack is a Last In, First Out (LIFO) data structure. Example: managing function calls in a programming language.",
-    distractor2:
-      "A stack is a Last In, First Out (LIFO) data structure. Example: managing function calls in a programming language.",
-    distractor3:
-      "A stack is a Last In, First Out (LIFO) data structure. Example: managing function calls in a programming language."
+    _id: "66db3a63d493144594ce0695",
+    context: "In computer science and IT, individuals interact with machines and other computers to perform tasks.",
+    question: "What is the primary outcome of user interaction with computer systems?",
+    answer: "Performing tasks and exchanging information",
+    distractors: ["Increasing software security", "Improving hardware performance", "Reducing user errors"],
+    isFlagged: false,
+    lectureId: "66db2d41a41cf4a7abfe84f5",
+    createdAt: "2024-09-06T17:22:43.673Z",
+    updatedAt: "2024-09-06T17:22:43.673Z"
   },
   {
-    questionId: 2,
-    question: "What is a stack and give an example?",
-    answer:
-      "A stack is a Last In, First Out (LIFO) data structure. Example: managing function calls in a programming language.",
-    distractor1:
-      "A stack is a Last In, First Out (LIFO) data structure. Example: managing function calls in a programming language.",
-    distractor2:
-      "A stack is a Last In, First Out (LIFO) data structure. Example: managing function calls in a programming language.",
-    distractor3:
-      "A stack is a Last In, First Out (LIFO) data structure. Example: managing function calls in a programming language."
-  },
-  {
-    questionId: 3,
-    question: "What is a stack and give an example?",
-    answer:
-      "A stack is a Last In, First Out (LIFO) data structure. Example: managing function calls in a programming language.",
-    distractor1:
-      "A stack is a Last In, First Out (LIFO) data structure. Example: managing function calls in a programming language.",
-    distractor2:
-      "A stack is a Last In, First Out (LIFO) data structure. Example: managing function calls in a programming language.",
-    distractor3:
-      "A stack is a Last In, First Out (LIFO) data structure. Example: managing function calls in a programming language."
+    _id: "66db3a63d493144594ce0696",
+    context: "The CPU, memory, and I/O devices are essential computer components.",
+    question: "Which component directly executes instructions in a computer system?",
+    answer: "CPU",
+    distractors: ["RAM", "I/O devices", "Motherboard"],
+    isFlagged: false,
+    lectureId: "66db2d41a41cf4a7abfe84f5",
+    createdAt: "2024-09-06T17:22:43.673Z",
+    updatedAt: "2024-09-06T17:22:43.673Z"
   }
 ];
 
@@ -82,18 +69,16 @@ const AllQuiz = () => {
       <div>
         {quizes.map((quiz) => (
           <QuizCard
-            key={quiz.questionId}
-            questionId={quiz.questionId}
+            key={quiz._id}
+            questionId={quiz._id}
             question={quiz.question}
             answer={quiz.answer}
-            distractor1={quiz.distractor1}
-            distractor2={quiz.distractor2}
-            distractor3={quiz.distractor3}
+            distractors={quiz.distractors} // Pass distractors array to QuizCard
           />
         ))}
       </div>
 
-      {/* Step 3: Use AddQuizPopup Component */}
+      {/* Popup for adding quizzes */}
       {showPopup && <AddQuizPopup onClose={togglePopup} />}
     </div>
   );
