@@ -16,11 +16,13 @@ export const theme = {
         "white": "#FEFEFE",
         "black": "#000000",
         "red": "#FE0000",
+        "dark-red": "#A00B0B",
         "blue": "#0B54A0",
         "green": "#02AB31",
         "paper": "#FDF5EA",
         "gray": "#E0E5E6",
-        "gray-light": "#F1F1F1"
+        "gray-light": "#F1F1F1",
+        "dark-blue": "#013D7C"
       }
     },
     backgroundImage: {

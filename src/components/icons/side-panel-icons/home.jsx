@@ -1,12 +1,25 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
 const HomeIcon = () => {
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleClick = (e) => {
+    // Check if '/admin-portal' is anywhere in the current path
+    if (location.pathname.includes('/admin-portal')) {
+      e.preventDefault(); // Prevent the default navigation
+      navigate('/admin-portal/dashboard'); // Redirect to '/all-quiz' instead
+    }
+  };
+
   return (
     <NavLink
       to="/"
       className={({ isActive }) =>
         `flex flex-col items-center rounded-md p-4 hover:bg-gray-300 ${isActive ? "bg-primary-blue text-white" : ""}`
       }
+      onClick={handleClick}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
