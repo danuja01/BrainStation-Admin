@@ -1,6 +1,5 @@
-import { Suspense } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
-import { DefaultLayout, Loader } from "@/components";
+import { DefaultLayout } from "@/components";
 import NotFound from "@/pages/404";
 import AddLecture from "@/pages/add-lecture";
 import AllModules from "@/pages/all-modules";
@@ -94,17 +93,7 @@ const CustomRoutes = () => {
         {coreRoutes.map((route, index) => {
           const { path, component: Component } = route;
 
-          return (
-            <Route
-              key={index}
-              path={path}
-              element={
-                <Suspense fallback={<Loader />}>
-                  <Component />
-                </Suspense>
-              }
-            />
-          );
+          return <Route key={index} path={path} element={<Component />} />;
         })}
       </Route>
       <Route path="*" element={<NotFound />} />
