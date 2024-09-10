@@ -9,7 +9,7 @@ export const addQuestion = async (data) => {
 };
 
 export const addQuestionBulk = async (data) => {
-  return await apiRequest(() => axiosInstance.post("/api/questions/bulk", data));
+  return await apiRequest(() => axiosInstance.post("/api/questions/bulk-insert", data));
 };
 
 export const updateQuestion = async (id, data) => {

@@ -1,46 +1,109 @@
 import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 function AddLecture() {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [lectureTitle, setLectureTitle] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+
+  const { moduleId } = useParams();
+  const navigate = useNavigate();
 
   const handleFileDrop = (event) => {
     event.preventDefault();
     const file = event.dataTransfer.files[0];
-    if (file.type.startsWith("application/vnd.openxmlformats-officedocument.presentation.presentation")) {
-      setSelectedFile(file);
-    } else {
-      alert("Please upload a .pptx file.");
-    }
+    validateFile(file);
   };
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-    if (file.type.startsWith("application/vnd.openxmlformats-officedocument.presentation.presentation")) {
+    validateFile(file);
+  };
+
+  const validateFile = (file) => {
+    if (file && file.name.endsWith(".pptx")) {
       setSelectedFile(file);
+      setErrorMessage("");
     } else {
-      alert("Please upload a .pptx file.");
+      setSelectedFile(null);
+      setErrorMessage("Please upload a valid .pptx file.");
     }
   };
 
-  const handleGenerateLecture = () => {
-    // Handle the logic to generate the lecture from the selected file
-    console.log("Generating lecture from:", selectedFile);
+  const handleGenerateLecture = async () => {
+    if (!lectureTitle) {
+      setErrorMessage("Please enter a lecture title.");
+      return;
+    }
+
+    if (!selectedFile) {
+      setErrorMessage("Please select a .pptx file.");
+      return;
+    }
+
+    setLoading(true);
+    setErrorMessage("");
+    setSuccessMessage("");
+    const formData = new FormData();
+    formData.append("title", lectureTitle);
+    formData.append("organization", "SLIIT");
+    formData.append("moduleId", moduleId);
+    formData.append("file", selectedFile);
+
+    try {
+      const token = import.meta.env.VITE_BRAINSTATION_TOKEN;
+      const response = await axios.post(`${import.meta.env.VITE_BRAINSTATION_BE_URL}/api/lectures/upload`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "Authorization": `Bearer ${token}`
+        }
+      });
+
+      if (response.data) {
+        setSuccessMessage("Lecture generated successfully!");
+        navigate(`/admin-portal/module/${moduleId}`);
+      } else {
+        setErrorMessage(`Error: ${response.data.message}`);
+      }
+    } catch (error) {
+      console.error("Error generating lecture:", error);
+      setErrorMessage("An error occurred while generating the lecture.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="p-4 px-6">
-      <div className="mb-10">
-        <h2 className="text-3xl font-bold">Add Lectures</h2>
-      </div>
       <div className="flex justify-center">
-        <div className="border rounded-lg w-7/12 py-12 px-6" style={{ boxShadow: "0px 0px 4.4px rgba(0, 0, 0, 0.3)" }}>
+        <div className="border rounded-lg w-7/12 py-4 px-6" style={{ boxShadow: "0px 0px 4.4px rgba(0, 0, 0, 0.3)" }}>
           <div>
-            <h2 className="text-3xl font-bold text-center">Upload Your Lecture Slides</h2>
+            <h2 className="text-2xl font-bold text-center">Upload Your Lecture Slides</h2>
           </div>
+
+          {/* Lecture Title Input */}
+          <div className="mt-6">
+            <label htmlFor="lecture-title" className="block text-lg font-semibold">
+              Lecture Title
+            </label>
+            <input
+              type="text"
+              id="lecture-title"
+              value={lectureTitle}
+              onChange={(e) => setLectureTitle(e.target.value)}
+              placeholder="Enter lecture title"
+              className="w-full mt-2 p-2 border rounded-lg"
+            />
+          </div>
+
+          {/* File Drop Zone */}
           <div
             onDrop={handleFileDrop}
             onDragOver={(e) => e.preventDefault()}
-            className="flex flex-col justify-center bg-stone-300 mt-10 mx-24 min-h-80 rounded-lg border py-10 px-6 divide-y divide-black"
+            className="flex flex-col justify-center bg-stone-300 mt-5 mx-24 min-h-80 rounded-lg border py-10 px-6 divide-y divide-black"
             style={{ boxShadow: "0px 0px 4.4px rgba(0, 0, 0, 0.2)" }}
           >
             <div className="drop-zone">
@@ -64,13 +127,21 @@ function AddLecture() {
               </label>
             </div>
           </div>
+
+          {/* Success Message */}
+          {successMessage && <div className="text-green-600 text-center h-5 text-xs mt-4">{successMessage}</div>}
+
+          {/* Error Message */}
+          {errorMessage && <div className="text-red-600 text-center h-5 text-xs mt-4">{errorMessage}</div>}
+
+          {/* Generate Button */}
           <div className="flex justify-center mt-8">
             <button
               onClick={handleGenerateLecture}
-              disabled={!selectedFile}
+              disabled={loading}
               className="text-white text-lg bg-blue-900 hover:bg-blue-700 cursor-pointer rounded-lg py-2 px-6"
             >
-              Generate Lecture
+              {loading ? "Generating..." : "Generate Lecture"}
             </button>
           </div>
         </div>

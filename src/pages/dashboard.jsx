@@ -1,55 +1,64 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import CourseCard from "@/components/cards/course-card";
+import { Loader } from "@/components";
+import ModuleCard from "@/components/cards/course-card";
 import AddModule from "@/components/popups/add-module";
+import useFetchData from "@/hooks/fetch-data";
+import { getAllModules } from "@/service/module";
+import { setModules } from "@/store/moduleSlice";
 
-const courses = [
-  { courseId: 1, title: "Foundations of Computing: Data Structures, Algorithms, and Operating Systems" }
-];
+// Redux action
 
 const Dashboard = () => {
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  // Fetch data with debounce (e.g., 500ms debounce)
+  const modulesData = useFetchData(getAllModules);
+
+  useEffect(() => {
+    if (modulesData) {
+      dispatch(setModules(modulesData.data.docs));
+    }
+  }, [modulesData, dispatch]);
 
   const togglePopup = () => {
     setShowPopup(!showPopup);
   };
 
-  const goToAllModules = () => {
-    navigate("/admin-portal/all-module");
+  const handleModuleClick = (moduleId) => {
+    navigate(`/admin-portal/module/${moduleId}`);
   };
 
   return (
-    <div className="p-4 px-6">
-      {/* header */}
-      <div className="flex justify-between items-center">
-        <h1 className="font-inter font-bold text-2xl">Welcome, Dinuja!</h1>
-        <button
-          className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={goToAllModules}
-        >
-          All Modules
-        </button>
-      </div>
-      {/* Module cards */}
-      <div className=" flex gap-4 mt-8">
-        {courses.map((course) => (
-          <CourseCard key={course.courseId} courseId={course.courseId} title={course.title} />
-        ))}
-        <div
-          className="bg-stone-100 select-none w-[26rem] h-[25rem] p-4 flex flex-col items-center justify-center text-center rounded-xl hover:opacity-75 cursor-pointer"
-          style={{ boxShadow: "0px 0px 4px rgba(0, 0, 0, 0.24)" }}
-        >
-          <button
-            className="bg-blue-900 hover:bg-blue-700 text-5xl text-white font-bold py-2 px-4 rounded-full"
-            onClick={togglePopup}
-          >
-            +
-          </button>
+    <>
+      {!modulesData ? (
+        <Loader />
+      ) : (
+        <div className="p-4 px-6">
+          {/* header */}
+          <div className="flex justify-between items-center">
+            <h1 className="font-inter font-bold text-2xl">All Modules</h1>
+          </div>
+          {/* Module cards */}
+          <div className="flex gap-4 mt-8 cursor-pointer" onClick={togglePopup}>
+            {modulesData?.data.docs.map((module) => (
+              <ModuleCard key={module._id} title={module.name} onClick={() => handleModuleClick(module._id)} />
+            ))}
+            <div
+              className="bg-blue-100 select-none w-[26rem] h-[25rem] flex flex-col items-center justify-center text-center rounded-xl"
+              style={{ boxShadow: "0px 0px 4px rgba(0, 0, 0, 0.24)" }}
+            >
+              <div className="text-blue-900 text-6xl font-bold">+</div>
+              <p className="text-blue-900 font-bold">Add New Module</p>
+            </div>
+          </div>
+          {showPopup && <AddModule onClose={togglePopup} />}
         </div>
-      </div>
-      {showPopup && <AddModule onClose={togglePopup} />}
-    </div>
+      )}
+    </>
   );
 };
 

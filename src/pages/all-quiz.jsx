@@ -1,50 +1,43 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import Scrollbars from "react-custom-scrollbars-2";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { Loader } from "@/components";
 import QuizCard from "@/components/cards/all-quiz-card";
 import AddQuizPopup from "@/components/popups/add-quizzes";
-
-const quizes = [
-  {
-    questionId: 1,
-    question: "What is a stack and give an example?",
-    answer:
-      "A stack is a Last In, First Out (LIFO) data structure. Example: managing function calls in a programming language.",
-    distractor1:
-      "A stack is a Last In, First Out (LIFO) data structure. Example: managing function calls in a programming language.",
-    distractor2:
-      "A stack is a Last In, First Out (LIFO) data structure. Example: managing function calls in a programming language.",
-    distractor3:
-      "A stack is a Last In, First Out (LIFO) data structure. Example: managing function calls in a programming language."
-  },
-  {
-    questionId: 2,
-    question: "What is a stack and give an example?",
-    answer:
-      "A stack is a Last In, First Out (LIFO) data structure. Example: managing function calls in a programming language.",
-    distractor1:
-      "A stack is a Last In, First Out (LIFO) data structure. Example: managing function calls in a programming language.",
-    distractor2:
-      "A stack is a Last In, First Out (LIFO) data structure. Example: managing function calls in a programming language.",
-    distractor3:
-      "A stack is a Last In, First Out (LIFO) data structure. Example: managing function calls in a programming language."
-  },
-  {
-    questionId: 3,
-    question: "What is a stack and give an example?",
-    answer:
-      "A stack is a Last In, First Out (LIFO) data structure. Example: managing function calls in a programming language.",
-    distractor1:
-      "A stack is a Last In, First Out (LIFO) data structure. Example: managing function calls in a programming language.",
-    distractor2:
-      "A stack is a Last In, First Out (LIFO) data structure. Example: managing function calls in a programming language.",
-    distractor3:
-      "A stack is a Last In, First Out (LIFO) data structure. Example: managing function calls in a programming language."
-  }
-];
+import QuizeGenerationPopup from "@/components/popups/generate-quiz";
+import ManualAddQuizPopup from "@/components/popups/mannual-add-quiz";
+import useFetchData from "@/hooks/fetch-data";
+import { getQuestions } from "@/service/question";
+import { setLectureQuestions } from "@/store/questionSlice";
 
 const AllQuiz = () => {
-  const [showPopup, setShowPopup] = useState(false); // State to manage popup visibility
+  const [showPopup, setShowPopup] = useState(false);
+  const [showManualAddPopup, setShowManualAddPopup] = useState(false);
+  const [showEmptyPopup, setShowEmptyPopup] = useState(false);
+  const [loading, setLoading] = useState(true);
+
   const navigate = useNavigate();
+  const { lectureId } = useParams();
+  const dispatch = useDispatch();
+
+  const { questions } = useSelector((state) => state.questions);
+
+  const questionsData = useFetchData(getQuestions, { "filter[lectureId]": lectureId });
+
+  useEffect(() => {
+    if (questionsData) {
+      dispatch(
+        setLectureQuestions({
+          lectureId,
+          questions: questionsData.data.docs
+        })
+      );
+      setLoading(false);
+    } else {
+      setLoading(true);
+    }
+  }, [questionsData, dispatch, lectureId]);
 
   const togglePopup = () => {
     setShowPopup(!showPopup);
@@ -61,7 +54,7 @@ const AllQuiz = () => {
           <p className="font-semibold text-lg">
             Foundations of Computing: Data Structures, Algorithms, and Operating Systems
           </p>
-          <h2 className="font-semibold text-4xl">All Quizzes</h2>
+          <h2 className="font-semibold text-4xl">All Questions</h2>
         </div>
         <div className="flex items-center">
           <button
@@ -72,29 +65,63 @@ const AllQuiz = () => {
           </button>
           <button
             className="bg-blue-700 hover:bg-blue-600 text-white uppercase font-bold py-2 px-4 rounded mx-2"
-            onClick={togglePopup} // Toggle popup on click
+            onClick={togglePopup}
           >
             Add Quizzes
           </button>
         </div>
       </div>
 
-      <div>
-        {quizes.map((quiz) => (
-          <QuizCard
-            key={quiz.questionId}
-            questionId={quiz.questionId}
-            question={quiz.question}
-            answer={quiz.answer}
-            distractor1={quiz.distractor1}
-            distractor2={quiz.distractor2}
-            distractor3={quiz.distractor3}
-          />
-        ))}
-      </div>
+      {loading ? (
+        <div className="flex justify-center items-center">
+          <Loader />
+        </div>
+      ) : (
+        <Scrollbars
+          autoHide
+          autoHideTimeout={1000}
+          autoHideDuration={200}
+          autoHeight
+          autoHeightMin={0}
+          autoHeightMax={"calc(100vh - 220px)"}
+          thumbMinSize={30}
+          universal={true}
+          className="rounded-lg"
+        >
+          {questions.length > 0 ? (
+            questions.map((quiz, index) => (
+              <QuizCard
+                key={quiz._id}
+                questionId={quiz._id}
+                questionNumber={index + 1}
+                question={quiz.question}
+                answer={quiz.answer}
+                distractors={quiz.distractors}
+              />
+            ))
+          ) : (
+            <div className="text-center text-lg font-bold mt-6">No questions available for this lecture.</div>
+          )}
+        </Scrollbars>
+      )}
 
-      {/* Step 3: Use AddQuizPopup Component */}
-      {showPopup && <AddQuizPopup onClose={togglePopup} />}
+      {showPopup && (
+        <AddQuizPopup
+          onClose={togglePopup}
+          onManualAddQuiz={() => {
+            setShowManualAddPopup(true);
+            setShowPopup(false);
+          }}
+          onGenerateQuiz={() => {
+            setShowEmptyPopup(true);
+            setShowPopup(false);
+          }}
+        />
+      )}
+
+      {showManualAddPopup && <ManualAddQuizPopup onClose={() => setShowManualAddPopup(false)} />}
+
+      {showEmptyPopup && <QuizeGenerationPopup onClose={() => setShowEmptyPopup(false)} />}
     </div>
   );
 };

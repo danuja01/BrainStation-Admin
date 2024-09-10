@@ -1,6 +1,5 @@
-import { Suspense } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
-import { DefaultLayout, Loader } from "@/components";
+import { DefaultLayout } from "@/components";
 import NotFound from "@/pages/404";
 import AddLecture from "@/pages/add-lecture";
 import AllModules from "@/pages/all-modules";
@@ -43,7 +42,7 @@ const coreRoutes = [
     component: Dashboard
   },
   {
-    path: "admin-portal/all-quiz",
+    path: "admin-portal/quizzes/:lectureId",
     title: "all-quiz",
     component: AllQuiz
   },
@@ -73,12 +72,12 @@ const coreRoutes = [
     component: MetricsPage
   },
   {
-    path: "admin-portal/lecture",
+    path: "/admin-portal/module/:moduleId",
     title: "lecture",
     component: Lecture
   },
   {
-    path: "admin-portal/add-lecture",
+    path: "admin-portal/add-lecture/:moduleId",
     title: "add-lecture",
     component: AddLecture
   }
@@ -94,17 +93,7 @@ const CustomRoutes = () => {
         {coreRoutes.map((route, index) => {
           const { path, component: Component } = route;
 
-          return (
-            <Route
-              key={index}
-              path={path}
-              element={
-                <Suspense fallback={<Loader />}>
-                  <Component />
-                </Suspense>
-              }
-            />
-          );
+          return <Route key={index} path={path} element={<Component />} />;
         })}
       </Route>
       <Route path="*" element={<NotFound />} />
