@@ -77,7 +77,7 @@ const coreRoutes = [
     component: Lecture
   },
   {
-    path: "admin-portal/add-lecture",
+    path: "admin-portal/add-lecture/:moduleId",
     title: "add-lecture",
     component: AddLecture
   }

@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import Scrollbars from "react-custom-scrollbars-2";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Loader } from "@/components";
@@ -23,7 +24,7 @@ const Lecture = () => {
   }, [lecturesData, dispatch]);
 
   const navToAddLecture = () => {
-    navigate("/admin-portal/add-lecture");
+    navigate(`/admin-portal/add-lecture/${moduleId}`);
   };
 
   return (
@@ -43,14 +44,26 @@ const Lecture = () => {
           </div>
           {/* Lecture Cards */}
           <div className="mt-8 mx-20">
-            {lectures?.map((lecture) => (
-              <LectureCard
-                key={lecture._id}
-                lecture={lecture.title}
-                slidesTot={lecture.slides.length}
-                lectureId={lecture._id}
-              />
-            ))}
+            <Scrollbars
+              autoHide
+              autoHideTimeout={1000}
+              autoHideDuration={200}
+              autoHeight
+              autoHeightMin={0}
+              autoHeightMax={"calc(100vh - 220px)"}
+              thumbMinSize={30}
+              universal={true}
+              className="rounded-lg"
+            >
+              {lectures?.map((lecture) => (
+                <LectureCard
+                  key={lecture._id}
+                  lecture={lecture.title}
+                  slidesTot={lecture.slides.length}
+                  lectureId={lecture._id}
+                />
+              ))}
+            </Scrollbars>
           </div>
           {lectures.length === 0 && (
             <div className="h-full w-full flex justify-center items-center text-center text-lg font-inter text-gray-400">
