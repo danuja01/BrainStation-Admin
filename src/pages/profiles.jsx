@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
+import Scrollbars from "react-custom-scrollbars-2";
 import { useNavigate, useParams } from "react-router-dom";
+import { Loader } from "@/components";
 import ProfileLayout from "@/components/layout/profile";
 import { getUserById } from "@/service/UserService";
-import { Loader } from "@/components";
-import Scrollbars from "react-custom-scrollbars-2";
 
 const ProfilePage = () => {
   const { userId } = useParams(); // Get userId from the URL

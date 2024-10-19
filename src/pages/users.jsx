@@ -3,12 +3,14 @@ import { useNavigate } from "react-router-dom";
 import UserCard from "@/components/cards/user-card";
 import FilterIcon from "@/components/icons/filter-icon";
 import SearchIcon from "@/components/icons/search-icon";
-import { getAllUsers } from "@/service/UserService"; // Fetch users dynamically from the backend
+import { getAllUsers } from "@/service/UserService";
+
+// Fetch users dynamically from the backend
 
 const Users = () => {
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,9 +37,7 @@ const Users = () => {
     setSearchQuery(query);
 
     // Filter users based on the search query
-    const filtered = users.filter((user) =>
-      user.name.toLowerCase().includes(query.toLowerCase())
-    );
+    const filtered = users.filter((user) => user.name.toLowerCase().includes(query.toLowerCase()));
     setFilteredUsers(filtered);
   };
 
@@ -45,9 +45,15 @@ const Users = () => {
     <div className="p-4 px-6">
       {/* Search Bar */}
       <div className="flex justify-center">
-        <div className="flex justify-center border rounded-full h-14" style={{ boxShadow: "0px 0px 3px rgba(0, 0, 0, 0.25)" }}>
+        <div
+          className="flex justify-center border rounded-full h-14"
+          style={{ boxShadow: "0px 0px 3px rgba(0, 0, 0, 0.25)" }}
+        >
           <div className="flex items-center px-3 py-2 min-w-80" style={{ width: "500px" }}>
-            <div className="flex justify-between items-center border rounded-full w-full h-8 bg-neutral-200" style={{ boxShadow: "0px 0px 3px rgba(0, 0, 0, 0.25)" }}>
+            <div
+              className="flex justify-between items-center border rounded-full w-full h-8 bg-neutral-200"
+              style={{ boxShadow: "0px 0px 3px rgba(0, 0, 0, 0.25)" }}
+            >
               <SearchIcon />
               <p className="text-xl mx-2 text-slate-700">|</p>
               <input
