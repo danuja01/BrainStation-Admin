@@ -25,7 +25,8 @@ const ProfilePage = () => {
   }, [userId]);
 
   const navToMetrics = () => {
-    navigate("/admin-portal/metrics"); // Navigate to the metrics page
+    // Navigate to the metrics page and pass the userId as a query parameter
+    navigate(`/admin-portal/metrics?userId=${userId}`);
   };
 
   if (!userData) {
@@ -50,7 +51,7 @@ const ProfilePage = () => {
           userName={userData.data.username}
           email={userData.data.email}
           organization={userData.data.organization}
-          onClick={() => navToMetrics(userData._id)} // Pass userId to navigate to metrics
+          onClick={navToMetrics} // Navigate to metrics page with userId
         />
       </Scrollbars>
     </div>
