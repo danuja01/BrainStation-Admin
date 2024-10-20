@@ -1,5 +1,7 @@
+import { useLocation } from "react-router-dom";
 import ToggleTabs from "@/components/toggle/toggle";
-import { useLocation } from "react-router-dom"; // Import this to get query params
+
+// Import this to get query params
 
 const MetricsPage = () => {
   const location = useLocation();

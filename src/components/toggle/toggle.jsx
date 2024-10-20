@@ -1,6 +1,9 @@
-import { useState, useEffect } from "react";
-import { getSessionsByUser, getTotalSessionData } from "@/service/SessionService"; // Import the services
-import Scrollbars from "react-custom-scrollbars-2"; // Import Scrollbars
+import { useEffect, useState } from "react";
+// Import the services
+import Scrollbars from "react-custom-scrollbars-2";
+import { getSessionsByUser, getTotalSessionData } from "@/service/SessionService";
+
+// Import Scrollbars
 
 const ToggleTabs = ({ userId }) => {
   const [activeTab, setActiveTab] = useState("Session Logs");
@@ -83,11 +86,21 @@ const ToggleTabs = ({ userId }) => {
             ) : (
               sessionOverview && (
                 <div className="p-4 border rounded-lg">
-                  <p><strong>Total Study Time:</strong> {sessionOverview.totalStudyTime.toFixed(2)}</p>
-                  <p><strong>Total Focus Time:</strong> {sessionOverview.totalFocusTime.toFixed(2)}</p>
-                  <p><strong>Total Movements:</strong> {sessionOverview.totalMovements}</p>
-                  <p><strong>Total Erratic Movements:</strong> {sessionOverview.totalErraticMovements}</p>
-                  <p><strong>ADHD Classification:</strong> {sessionOverview.adhdClassification}</p>
+                  <p>
+                    <strong>Total Study Time:</strong> {sessionOverview.totalStudyTime.toFixed(2)}
+                  </p>
+                  <p>
+                    <strong>Total Focus Time:</strong> {sessionOverview.totalFocusTime.toFixed(2)}
+                  </p>
+                  <p>
+                    <strong>Total Movements:</strong> {sessionOverview.totalMovements}
+                  </p>
+                  <p>
+                    <strong>Total Erratic Movements:</strong> {sessionOverview.totalErraticMovements}
+                  </p>
+                  <p>
+                    <strong>ADHD Classification:</strong> {sessionOverview.adhdClassification}
+                  </p>
                 </div>
               )
             )}
@@ -95,7 +108,9 @@ const ToggleTabs = ({ userId }) => {
         )}
 
         {activeTab === "Session Logs" && (
-          <Scrollbars style={{ height: 400 }}> {/* Wrap session logs in Scrollbars */}
+          <Scrollbars style={{ height: 400 }}>
+            {" "}
+            {/* Wrap session logs in Scrollbars */}
             <div>
               {loading ? (
                 <p>Loading session logs...</p>
@@ -105,14 +120,30 @@ const ToggleTabs = ({ userId }) => {
                 <ul>
                   {sessionLogs.map((log) => (
                     <li key={log._id} className="border-b p-2">
-                      <p><strong>Date:</strong> {new Date(log.date).toLocaleDateString()}</p>
-                      <p><strong>Start Time:</strong> {new Date(log.startTime).toLocaleTimeString()}</p>
-                      <p><strong>Stop Time:</strong> {new Date(log.stopTime).toLocaleTimeString()}</p>
-                      <p><strong>Focus Time (hrs):</strong> {log.focus_time.toFixed(2)}</p>
-                      <p><strong>Total Movements:</strong> {log.total_movements}</p>
-                      <p><strong>Erratic Movements:</strong> {log.erratic_movements}</p>
-                      <p><strong>Erratic Percentage:</strong> {log.erratic_percentage}%</p>
-                      <p><strong>Final Classification:</strong> {log.final_classification}</p>
+                      <p>
+                        <strong>Date:</strong> {new Date(log.date).toLocaleDateString()}
+                      </p>
+                      <p>
+                        <strong>Start Time:</strong> {new Date(log.startTime).toLocaleTimeString()}
+                      </p>
+                      <p>
+                        <strong>Stop Time:</strong> {new Date(log.stopTime).toLocaleTimeString()}
+                      </p>
+                      <p>
+                        <strong>Focus Time (hrs):</strong> {log.focus_time.toFixed(2)}
+                      </p>
+                      <p>
+                        <strong>Total Movements:</strong> {log.total_movements}
+                      </p>
+                      <p>
+                        <strong>Erratic Movements:</strong> {log.erratic_movements}
+                      </p>
+                      <p>
+                        <strong>Erratic Percentage:</strong> {log.erratic_percentage}%
+                      </p>
+                      <p>
+                        <strong>Final Classification:</strong> {log.final_classification}
+                      </p>
                       <div>
                         <strong>Emotion Distribution:</strong>
                         <ul>

@@ -27,15 +27,21 @@ export const getSessionsOfUserByModule = async (userId, moduleId) => {
 
 // Get user start and end times per module
 export const getStartEndTimesOfUserByModule = async (userId, moduleId) => {
-  return await apiRequest(() => axiosInstance.get(`/api/sessions/start-end-times/${userId}?filter[moduleId]=${moduleId}`));
+  return await apiRequest(() =>
+    axiosInstance.get(`/api/sessions/start-end-times/${userId}?filter[moduleId]=${moduleId}`)
+  );
 };
 
 // Get total focus time for a user by module
 export const getTotalFocusTimeOfUserByModule = async (userId, moduleId) => {
-  return await apiRequest(() => axiosInstance.get(`/api/sessions/total-focus-time/${userId}?filter[moduleId]=${moduleId}`));
+  return await apiRequest(() =>
+    axiosInstance.get(`/api/sessions/total-focus-time/${userId}?filter[moduleId]=${moduleId}`)
+  );
 };
 
 // Get average focus time for a user by module
 export const getAverageFocusTimeOfUserByModule = async (userId, moduleId) => {
-  return await apiRequest(() => axiosInstance.get(`/api/sessions/average-focus-time/${userId}?filter[moduleId]=${moduleId}`));
+  return await apiRequest(() =>
+    axiosInstance.get(`/api/sessions/average-focus-time/${userId}?filter[moduleId]=${moduleId}`)
+  );
 };
