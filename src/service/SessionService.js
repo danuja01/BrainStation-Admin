@@ -15,6 +15,11 @@ export const getSessionsByUser = async (userId) => {
   return await apiRequest(() => axiosInstance.get(`/api/sessions/user/${userId}`));
 };
 
+// New API to get total session details for a user
+export const getTotalSessionData = async (userId) => {
+  return await apiRequest(() => axiosInstance.get(`/api/sessions/sessionData/${userId}`));
+};
+
 // Get all sessions of a user by module
 export const getSessionsOfUserByModule = async (userId, moduleId) => {
   return await apiRequest(() => axiosInstance.get(`/api/sessions/userByModule/${userId}?filter[moduleId]=${moduleId}`));
