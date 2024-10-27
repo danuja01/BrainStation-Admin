@@ -11,7 +11,9 @@ const AllQuizCard = ({
   answer,
   distractors,
   disableBtns = false,
-  alternativeQuestions
+  alternativeQuestions,
+  context,
+  lectureId
 }) => {
   const location = useLocation();
   const [showEditPopup, setShowEditPopup] = useState(false);
@@ -103,6 +105,8 @@ const AllQuizCard = ({
               answer={answer}
               alternativeQuestions={alternativeQuestions}
               distractors={distractors}
+              context={context}
+              lectureId={lectureId}
             />
           )}
         </>

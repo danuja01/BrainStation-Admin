@@ -98,6 +98,8 @@ const AllQuiz = () => {
                 alternativeQuestions={quiz.alternative_questions}
                 answer={quiz.answer}
                 distractors={quiz.distractors}
+                context={quiz.context}
+                lectureId={lectureId}
               />
             ))
           ) : (

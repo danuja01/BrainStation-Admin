@@ -1,14 +1,30 @@
+// EditPopup.jsx
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { updateQuestion as updateQuestionService } from "@/service/question";
+import { updateQuestion } from "@/store/questionSlice";
 import ScrollView from "../common/scrollable-view";
 
-const EditPopup = ({ onClose, questionId, question, answer, distractors, alternativeQuestions }) => {
+const EditPopup = ({
+  onClose,
+  questionId,
+  question,
+  answer,
+  distractors,
+  alternativeQuestions,
+  context,
+  lectureId
+}) => {
+  const dispatch = useDispatch();
+
   const [editedQuestion, setEditedQuestion] = useState(question || "");
   const [editedAnswer, setEditedAnswer] = useState(answer || "");
   const [editedDistractors, setEditedDistractors] = useState(distractors || ["", "", ""]);
   const [editedAlternativeQuestions, setEditedAlternativeQuestions] = useState(alternativeQuestions || [""]);
   const [validationErrors, setValidationErrors] = useState({});
+  const [isSaving, setIsSaving] = useState(false);
 
-  const handleSaveChanges = () => {
+  const handleSaveChanges = async () => {
     const errors = {};
 
     // Validation check for empty fields
@@ -17,6 +33,9 @@ const EditPopup = ({ onClose, questionId, question, answer, distractors, alterna
     editedAlternativeQuestions.forEach((altQuestion, index) => {
       if (!altQuestion.trim()) errors[`alternativeQuestion${index}`] = true;
     });
+    editedDistractors.forEach((distractor, index) => {
+      if (!distractor.trim()) errors[`distractor${index}`] = true;
+    });
 
     if (Object.keys(errors).length > 0) {
       setValidationErrors(errors);
@@ -24,15 +43,28 @@ const EditPopup = ({ onClose, questionId, question, answer, distractors, alterna
     }
 
     const updatedQuiz = {
-      questionId,
       question: editedQuestion,
       answer: editedAnswer,
       distractors: editedDistractors,
-      alternativeQuestions: editedAlternativeQuestions
+      alternative_questions: editedAlternativeQuestions,
+      context,
+      lectureId
     };
 
-    console.log("Updated Quiz Data: ", updatedQuiz);
-    onClose();
+    setIsSaving(true);
+
+    try {
+      // Update question in the backend
+      const response = await updateQuestionService(questionId, updatedQuiz);
+      if (response.success) {
+        dispatch(updateQuestion(response.data)); // Update question in Redux store
+        onClose();
+      }
+    } catch (error) {
+      console.error("Failed to update question:", error);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleAlternativeQuestionChange = (index, value) => {
@@ -151,10 +183,13 @@ const EditPopup = ({ onClose, questionId, question, answer, distractors, alterna
             <div className="flex justify-end">
               <button
                 type="button"
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
+                className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2 ${
+                  isSaving ? "opacity-50 cursor-not-allowed" : ""
+                }`}
                 onClick={handleSaveChanges}
+                disabled={isSaving}
               >
-                Save
+                {isSaving ? "Saving..." : "Save"}
               </button>
               <button
                 type="button"

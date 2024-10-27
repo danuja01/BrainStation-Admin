@@ -13,7 +13,7 @@ export const addQuestionBulk = async (data) => {
 };
 
 export const updateQuestion = async (id, data) => {
-  return await apiRequest(() => axiosInstance.put(`/api/questions/${id}`, data));
+  return await apiRequest(() => axiosInstance.patch(`/api/questions/${id}`, data));
 };
 
 export const getQuestions = async (params = {}) => {
