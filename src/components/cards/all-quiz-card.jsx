@@ -1,8 +1,15 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
+// Import DialogBox component
+import { deleteQuestion as deleteQuestionService } from "@/service/question";
+import { removeQuestion } from "@/store/questionSlice";
+import DialogBox from "../common/DialogBox";
 import DeleteIcon from "../icons/delete-icon";
 import EditIcon from "../icons/edit-icon";
 import EditPopup from "../popups/edit-quizzes";
+
+// Assumes a removeQuestion action exists in the slice
 
 const AllQuizCard = ({
   questionId,
@@ -11,10 +18,14 @@ const AllQuizCard = ({
   answer,
   distractors,
   disableBtns = false,
-  alternativeQuestions
+  alternativeQuestions,
+  context,
+  lectureId
 }) => {
+  const dispatch = useDispatch();
   const location = useLocation();
   const [showEditPopup, setShowEditPopup] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false); // State for dialog visibility
   const [showAlternatives, setShowAlternatives] = useState(false);
   const [showDistractors, setShowDistractors] = useState(false);
 
@@ -30,6 +41,23 @@ const AllQuizCard = ({
 
   const toggleAlternatives = () => setShowAlternatives(!showAlternatives);
   const toggleDistractors = () => setShowDistractors(!showDistractors);
+
+  const handleDeleteClick = () => {
+    setShowDeleteDialog(true); // Show confirmation dialog
+  };
+
+  const confirmDelete = async () => {
+    try {
+      const response = await deleteQuestionService(questionId);
+      if (response.success) {
+        dispatch(removeQuestion({ _id: questionId }));
+      }
+      setShowDeleteDialog(false); // Close dialog after deletion
+    } catch (error) {
+      console.error("Error deleting question:", error);
+      setShowDeleteDialog(false); // Ensure dialog closes even if there's an error
+    }
+  };
 
   return (
     <div
@@ -92,7 +120,7 @@ const AllQuizCard = ({
           <div className="absolute top-2 right-2">
             <div className="flex ">
               <EditIcon onClick={handleEditClick} />
-              <DeleteIcon />
+              <DeleteIcon onClick={handleDeleteClick} />
             </div>
           </div>
           {showEditPopup && (
@@ -103,10 +131,23 @@ const AllQuizCard = ({
               answer={answer}
               alternativeQuestions={alternativeQuestions}
               distractors={distractors}
+              context={context}
+              lectureId={lectureId}
             />
           )}
         </>
       )}
+
+      {/* DialogBox for delete confirmation */}
+      <DialogBox
+        isVisible={showDeleteDialog}
+        title="Confirm Deletion"
+        message="Are you sure you want to delete this quiz question?"
+        onOkay={confirmDelete}
+        onCancel={() => setShowDeleteDialog(false)}
+        okayLabel="Delete"
+        cancelLabel="Cancel"
+      />
     </div>
   );
 };
