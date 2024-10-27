@@ -9,6 +9,20 @@ export const axiosInstance = axios.create({
   }
 });
 
+axiosInstance.interceptors.request.use(
+  (config) => {
+    // Check the URL or other conditions to set headers dynamically
+    if (config.url.includes("api/lectures/upload")) {
+      config.headers["Content-Type"] = "multipart/form-data";
+    }
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 axiosInstance.interceptors.request.use((config) => {
   const token = localStorage.getItem("token") || import.meta.env.VITE_BRAINSTATION_TOKEN;
   if (token) {

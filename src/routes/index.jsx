@@ -22,16 +22,6 @@ const coreRoutes = [
     component: Dashboard
   },
   {
-    path: "/admin-portal/login",
-    title: "login",
-    component: Login
-  },
-  {
-    path: "/admin-portal/signup",
-    title: "signup",
-    component: Signup
-  },
-  {
     path: "/admin-portal",
     title: "dashboard",
     component: Dashboard
@@ -89,6 +79,8 @@ const CustomRoutes = () => {
   return (
     <Routes location={location}>
       {/* Routes with DefaultLayout */}
+      <Route path="/admin-portal/login" element={<Login />} />
+      <Route path="/admin-portal/signup" element={<Signup />} />
       <Route element={<DefaultLayout />}>
         {coreRoutes.map((route, index) => {
           const { path, component: Component } = route;
