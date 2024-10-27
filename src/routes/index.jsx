@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { DefaultLayout } from "@/components";
 import NotFound from "@/pages/404";
 import AddLecture from "@/pages/add-lecture";
@@ -15,57 +15,52 @@ import Users from "@/pages/users";
 
 const coreRoutes = [
   {
-    path: "/",
+    path: "",
     title: "dashboard",
     component: Dashboard
   },
   {
-    path: "/admin-portal",
+    path: "dashboard",
     title: "dashboard",
     component: Dashboard
   },
   {
-    path: "/admin-portal/dashboard",
-    title: "dashboard",
-    component: Dashboard
-  },
-  {
-    path: "admin-portal/quizzes/:lectureId",
+    path: "quizzes/:lectureId",
     title: "all-quiz",
     component: AllQuiz
   },
   {
-    path: "admin-portal/flagged-quiz",
+    path: "flagged-quiz",
     title: "flagged-quiz",
     component: FlaggedQuiz
   },
   {
-    path: "admin-portal/all-module",
+    path: "all-module",
     title: "all-module",
     component: AllModules
   },
   {
-    path: "admin-portal/users",
+    path: "users",
     title: "users",
     component: Users
   },
   {
-    path: "admin-portal/profile/:userId",
+    path: "profile/:userId",
     title: "profile",
     component: Profile
   },
   {
-    path: "admin-portal/metrics",
+    path: "metrics",
     title: "metrics",
     component: MetricsPage
   },
   {
-    path: "/admin-portal/module/:moduleId",
+    path: "module/:moduleId",
     title: "lecture",
     component: Lecture
   },
   {
-    path: "admin-portal/add-lecture/:moduleId",
+    path: "add-lecture/:moduleId",
     title: "add-lecture",
     component: AddLecture
   }
@@ -76,16 +71,20 @@ const CustomRoutes = () => {
 
   return (
     <Routes location={location}>
-      {/* Routes with DefaultLayout */}
-      <Route path="/admin-portal/login" element={<Login />} />
-      <Route path="/admin-portal/signup" element={<Signup />} />
-      <Route element={<DefaultLayout />}>
+      <Route path="/" element={<Navigate to="/admin-portal" replace />} />
+
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
+
+      <Route path="/admin-portal" element={<DefaultLayout />}>
         {coreRoutes.map((route, index) => {
           const { path, component: Component } = route;
 
           return <Route key={index} path={path} element={<Component />} />;
         })}
       </Route>
+
+      {/* Catch-all route */}
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
