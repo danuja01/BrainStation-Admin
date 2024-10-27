@@ -91,7 +91,7 @@ const AllQuiz = () => {
           {questions.length > 0 ? (
             questions.map((quiz, index) => (
               <QuizCard
-                key={quiz._id}
+                key={index}
                 questionId={quiz._id}
                 questionNumber={index + 1}
                 question={quiz.question}
