@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserCard from "@/components/cards/user-card";
+import ScrollView from "@/components/common/scrollable-view";
 import FilterIcon from "@/components/icons/filter-icon";
 import SearchIcon from "@/components/icons/search-icon";
 import { getAllUsers } from "@/service/UserService";
@@ -71,15 +72,19 @@ const Users = () => {
       </div>
 
       {/* User Cards */}
-      <div className="mt-8 mx-20">
-        {filteredUsers.map((user) => (
-          <UserCard
-            key={user._id} // Assuming _id is the unique identifier
-            profilePhoto={user.profilePhoto || "https://cdn-icons-png.freepik.com/512/219/219966.png"} // Fallback profile photo
-            userName={user.name}
-            onClick={() => navToUserProfile(user._id)} // Pass user ID to navigate
-          />
-        ))}
+      <div className="mt-4">
+        <ScrollView initialMaxHeight="12rem">
+          <div className="mx-20">
+            {filteredUsers.map((user) => (
+              <UserCard
+                key={user._id} // Assuming _id is the unique identifier
+                profilePhoto={user.profilePhoto || "https://cdn-icons-png.freepik.com/512/219/219966.png"} // Fallback profile photo
+                userName={user.name}
+                onClick={() => navToUserProfile(user._id)} // Pass user ID to navigate
+              />
+            ))}
+          </div>
+        </ScrollView>
       </div>
     </div>
   );

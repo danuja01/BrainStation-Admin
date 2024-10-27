@@ -2,7 +2,7 @@
 const ModuleCard = ({ title, onClick }) => {
   return (
     <div
-      className="select-none w-[26rem] h-[25rem] p-4 flex flex-col items-center text-center rounded-xl hover:opacity-75 cursor-pointer"
+      className="select-none w-[18rem] h-[18rem] p-4 flex flex-col items-center text-center rounded-xl hover:opacity-75 cursor-pointer"
       style={{ boxShadow: "0px 0px 4px rgba(0, 0, 0, 0.24)" }}
       onClick={onClick}
     >
