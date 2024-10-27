@@ -13,8 +13,6 @@ import Profile from "@/pages/profiles";
 import Signup from "@/pages/signup";
 import Users from "@/pages/users";
 
-// Ensure Loader is imported correctly
-
 const coreRoutes = [
   {
     path: "/",
