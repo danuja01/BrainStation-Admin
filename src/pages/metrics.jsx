@@ -11,7 +11,7 @@ const MetricsPage = () => {
   return (
     <div className="flex flex-col items-center p-4 px-6">
       <h1 className="text-center font-semibold text-2xl mb-6">Oshadha Thawalampola</h1>
-      <div className="w-full max-w-4xl">
+      <div className="w-full max-w-screen-2xl">
         {/* Pass the userId to ToggleTabs */}
         <ToggleTabs userId={userId} />
       </div>
