@@ -1,6 +1,5 @@
 import { Bar } from "react-chartjs-2";
-import './chartSetup';
-
+import "./chartSetup";
 
 const BarChart = ({ data }) => {
   const chartData = {
@@ -9,9 +8,9 @@ const BarChart = ({ data }) => {
       {
         label: "Value",
         data: data.map((item) => item.value),
-        backgroundColor: ["#3498db", "#2ecc71"],
-      },
-    ],
+        backgroundColor: ["#3498db", "#2ecc71"]
+      }
+    ]
   };
 
   return <Bar data={chartData} />;
