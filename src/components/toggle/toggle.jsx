@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 // Adjust this import path if needed
-import Scrollbars from "react-custom-scrollbars-2";
 import { getSessionsByUser, getTotalSessionDurationByUser } from "@/service/SessionService";
 // Ensure this path is correct
 import image01 from "../badges/01.png";
@@ -13,6 +12,7 @@ import image07 from "../badges/07.png";
 import image08 from "../badges/08.png";
 import BarChart from "../charts/bar-chart";
 import PieChart from "../charts/pie-chart";
+import ScrollView from "../common/scrollable-view";
 import SessionLogs from "../popups/session-logs";
 
 const ToggleTabs = ({ userId }) => {
@@ -149,7 +149,7 @@ const ToggleTabs = ({ userId }) => {
 
         {/* Session Logs Tab */}
         {activeTab === "Session Logs" && (
-          <Scrollbars style={{ height: 800 }}>
+          <ScrollView initialMaxHeight="18rem">
             {loading ? (
               <p>Loading session logs...</p>
             ) : error ? (
@@ -169,64 +169,66 @@ const ToggleTabs = ({ userId }) => {
                 ))}
               </ul>
             )}
-          </Scrollbars>
+          </ScrollView>
         )}
 
         {/* Popup for Session Logs Details */}
         {showPopup && selectedSession && (
           <SessionLogs onClose={() => setShowPopup(false)}>
-            <div className="p-4">
-              <h3 className="text-2xl text-center font-bold mb-2">Session Details</h3>
-              <div className="flex justify-center my-12">
-                <div className="w-1/2 mx-4 p-6 shadow flex flex-col justify-center items-center">
-                  <p className="text-center font-bold mb-3 text-lg">Basic Details</p>
-                  <p>
-                    <strong>Date:</strong> {new Date(selectedSession.date).toLocaleDateString()}
-                  </p>
-                  <p>
-                    <strong>Start Time:</strong> {new Date(selectedSession.startTime).toLocaleTimeString()}
-                  </p>
-                  <p>
-                    <strong>Stop Time:</strong> {new Date(selectedSession.stopTime).toLocaleTimeString()}
-                  </p>
-                  <p>
-                    <strong>Focus Time (hrs):</strong>{" "}
-                    {selectedSession.focus_time ? selectedSession.focus_time.toFixed(2) : "N/A"}
-                  </p>
-                </div>
+            <ScrollView initialMaxHeight="10rem">
+              <div className="p-4">
+                <h3 className="text-2xl text-center font-bold mb-2">Session Details</h3>
+                <div className="flex justify-center my-12">
+                  <div className="w-1/2 mx-4 p-6 shadow flex flex-col justify-center items-center">
+                    <p className="text-center font-bold mb-3 text-lg">Basic Details</p>
+                    <p>
+                      <strong>Date:</strong> {new Date(selectedSession.date).toLocaleDateString()}
+                    </p>
+                    <p>
+                      <strong>Start Time:</strong> {new Date(selectedSession.startTime).toLocaleTimeString()}
+                    </p>
+                    <p>
+                      <strong>Stop Time:</strong> {new Date(selectedSession.stopTime).toLocaleTimeString()}
+                    </p>
+                    <p>
+                      <strong>Focus Time (hrs):</strong>{" "}
+                      {selectedSession.focus_time ? selectedSession.focus_time.toFixed(2) : "N/A"}
+                    </p>
+                  </div>
 
-                {/* Bar chart for Movements */}
-                <div className="w-1/2 flex flex-col items-center p-6 shadow mx-4">
-                  <p className="text-center font-bold mb-3 text-lg">Movements</p>
-                  <BarChart
-                    data={[
-                      { label: "Total Movements", value: selectedSession.total_movements || 0 },
-                      { label: "Erratic Movements", value: selectedSession.erratic_movements || 0 }
-                    ]}
-                  />
-                  <p className="text-center mt-4 text-red-500">
-                    Erratic Percentage:{" "}
-                    {selectedSession.erratic_percentage ? selectedSession.erratic_percentage.toFixed(2) : "N/A"}%
-                  </p>
-                </div>
-              </div>
-              <div className="flex">
-                <div className="w-1/2 shadow p-6 mx-4 flex flex-col justify-center items-center">
-                  <p className="text-center font-bold mb-3 text-lg">Emotion Distribution:</p>
-                  <div className="w-60">
-                    <PieChart data={selectedSession.emotion_distribution || []} />
+                  {/* Bar chart for Movements */}
+                  <div className="w-1/2 flex flex-col items-center p-6 shadow mx-4">
+                    <p className="text-center font-bold mb-3 text-lg">Movements</p>
+                    <BarChart
+                      data={[
+                        { label: "Total Movements", value: selectedSession.total_movements || 0 },
+                        { label: "Erratic Movements", value: selectedSession.erratic_movements || 0 }
+                      ]}
+                    />
+                    <p className="text-center mt-4 text-red-500">
+                      Erratic Percentage:{" "}
+                      {selectedSession.erratic_percentage ? selectedSession.erratic_percentage.toFixed(2) : "N/A"}%
+                    </p>
                   </div>
                 </div>
-                <div className="w-1/2 shadow p-6 mx-4">
-                  <p className="text-center font-bold mb-3 text-lg">Final Classification</p>
-                  <img
-                    src={getImageSource(selectedSession.final_classification)}
-                    alt={selectedSession.final_classification}
-                    className="w-80"
-                  />
+                <div className="flex">
+                  <div className="w-1/2 shadow p-6 mx-4 flex flex-col justify-center items-center">
+                    <p className="text-center font-bold mb-3 text-lg">Emotion Distribution:</p>
+                    <div className="w-60">
+                      <PieChart data={selectedSession.emotion_distribution || []} />
+                    </div>
+                  </div>
+                  <div className="w-1/2 flex flex-col items-center shadow p-6 mx-4">
+                    <p className="text-center font-bold mb-3 text-lg">Final Classification</p>
+                    <img
+                      src={getImageSource(selectedSession.final_classification)}
+                      alt={selectedSession.final_classification}
+                      className="w-80"
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
+            </ScrollView>
           </SessionLogs>
         )}
       </div>

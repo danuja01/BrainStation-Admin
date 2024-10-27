@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import Scrollbars from "react-custom-scrollbars-2";
 import { useNavigate, useParams } from "react-router-dom";
 import { Loader } from "@/components";
+import ScrollView from "@/components/common/scrollable-view";
 import ProfileLayout from "@/components/layout/profile";
 import { getUserById } from "@/service/UserService";
 
@@ -36,16 +36,7 @@ const ProfilePage = () => {
   return (
     <div className="p-4 px-6">
       {/* Scrollbars Component Wrapping the Profile Content */}
-      <Scrollbars
-        autoHide
-        autoHideTimeout={1000}
-        autoHideDuration={200}
-        autoHeight
-        autoHeightMax={"calc(100vh - 200px)"}
-        thumbMinSize={30}
-        universal={true}
-        className="rounded-lg"
-      >
+      <ScrollView initialMaxHeight="8rem">
         <ProfileLayout
           profilePhoto={userData.profilePhoto || "https://cdn-icons-png.freepik.com/512/219/219966.png"} // Fallback profile photo
           userName={userData.data.username}
@@ -53,7 +44,7 @@ const ProfilePage = () => {
           organization={userData.data.organization}
           onClick={navToMetrics} // Navigate to metrics page with userId
         />
-      </Scrollbars>
+      </ScrollView>
     </div>
   );
 };
