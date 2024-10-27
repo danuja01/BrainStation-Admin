@@ -218,7 +218,7 @@ const ToggleTabs = ({ userId }) => {
                       <PieChart data={selectedSession.emotion_distribution || []} />
                     </div>
                   </div>
-                  <div className="w-1/2 shadow p-6 mx-4">
+                  <div className="w-1/2 flex flex-col items-center shadow p-6 mx-4">
                     <p className="text-center font-bold mb-3 text-lg">Final Classification</p>
                     <img
                       src={getImageSource(selectedSession.final_classification)}
