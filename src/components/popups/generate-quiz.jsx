@@ -16,7 +16,7 @@ const QuizeGenerationPopup = ({ onClose }) => {
 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [localQuestions, setLocalQuestions] = useState([]); // Local state for questions
+  const [localQuestions, setLocalQuestions] = useState([]);
 
   const generatedQuestions = useSelector((state) => state.generateQuestion.generatedQuestions[lectureId]);
   const existingQuestions = useSelector((state) =>
@@ -29,7 +29,7 @@ const QuizeGenerationPopup = ({ onClose }) => {
     if (lecture?.data && !generatedQuestions && loading) {
       handleGenerateQuestions();
     } else if (generatedQuestions) {
-      setLocalQuestions(generatedQuestions); // Sync Redux data to local state initially
+      setLocalQuestions(generatedQuestions);
       setLoading(false);
     }
   }, [lecture, generatedQuestions, loading]);
@@ -40,7 +40,7 @@ const QuizeGenerationPopup = ({ onClose }) => {
       const response = await generateQuestion(lecture.data);
       const questions = response.data || [];
       dispatch(setGeneratedQuestions({ lectureId, questions }));
-      setLocalQuestions(questions); // Initialize local state with fetched questions
+      setLocalQuestions(questions);
       setLoading(false);
     } catch (error) {
       console.error("Error generating questions:", error);
@@ -91,14 +91,14 @@ const QuizeGenerationPopup = ({ onClose }) => {
     }
   };
 
-  // QuizeGenerationPopup.jsx
   const handleUpdateQuestion = (index, updatedQuestion) => {
-    console.log("Popup: Updating question at index:", index, "with data:", updatedQuestion);
-
-    // Update the localQuestions array at the specified index
     setLocalQuestions((prevQuestions) =>
       prevQuestions.map((question, i) => (i === index ? { ...question, ...updatedQuestion } : question))
     );
+  };
+
+  const handleDeleteQuestion = (index) => {
+    setLocalQuestions((prevQuestions) => prevQuestions.filter((_, i) => i !== index));
   };
 
   return (
@@ -130,7 +130,8 @@ const QuizeGenerationPopup = ({ onClose }) => {
                     answer={quiz.answer}
                     alternativeQuestions={quiz.alternative_questions}
                     distractors={quiz.distractors}
-                    onEdit={(updatedQuiz) => handleUpdateQuestion(index, updatedQuiz)} // Pass index explicitly to handleUpdateQuestion
+                    onEdit={(updatedQuiz) => handleUpdateQuestion(index, updatedQuiz)}
+                    onDelete={(index) => handleDeleteQuestion(index)}
                   />
                 ))
               ) : (

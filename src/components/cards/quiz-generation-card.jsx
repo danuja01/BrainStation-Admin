@@ -11,6 +11,7 @@ const QuizGenerationCard = ({
   alternativeQuestions,
   index,
   onEdit,
+  onDelete,
   disableBtns = false
 }) => {
   const [showEditPopup, setShowEditPopup] = useState(false);
@@ -86,7 +87,7 @@ const QuizGenerationCard = ({
       {!disableBtns && (
         <div className="absolute top-2 right-2 flex space-x-2">
           <EditIcon onClick={handleEditClick} className="cursor-pointer" />
-          <DeleteIcon />
+          <DeleteIcon onClick={() => onDelete(index)} className="cursor-pointer" />
         </div>
       )}
 
