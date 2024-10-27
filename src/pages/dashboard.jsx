@@ -43,7 +43,7 @@ const Dashboard = () => {
             <h1 className="font-inter font-bold text-2xl">All Modules</h1>
           </div>
           {/* Module cards */}
-          <div className="flex gap-4 mt-8 cursor-pointer" onClick={togglePopup}>
+          <div className="grid grid-cols-2 xl:grid-cols-3 gap-4 mt-8 cursor-pointer" onClick={togglePopup}>
             {modulesData?.data.docs.map((module) => (
               <ModuleCard key={module._id} title={module.name} onClick={() => handleModuleClick(module._id)} />
             ))}

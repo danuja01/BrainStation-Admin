@@ -62,7 +62,7 @@ const coreRoutes = [
     component: Users
   },
   {
-    path: "admin-portal/profile",
+    path: "admin-portal/profile/:userId",
     title: "profile",
     component: Profile
   },
