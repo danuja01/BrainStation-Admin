@@ -5,6 +5,7 @@ import AddLecture from "@/pages/add-lecture";
 import AllModules from "@/pages/all-modules";
 import AllQuiz from "@/pages/all-quiz";
 import Dashboard from "@/pages/dashboard";
+import SlideEditor from "@/pages/edit-lectures";
 import FlaggedQuiz from "@/pages/flagged-quiz";
 import Lecture from "@/pages/lecture";
 import Login from "@/pages/login";
@@ -70,6 +71,11 @@ const coreRoutes = [
     path: "admin-portal/add-lecture/:moduleId",
     title: "add-lecture",
     component: AddLecture
+  },
+  {
+    path: "admin-portal/edit-lecture",
+    title: "edit-lecture",
+    component: SlideEditor
   }
 ];
 
