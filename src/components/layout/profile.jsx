@@ -23,7 +23,7 @@ const ProfileLayout = ({ profilePhoto, userName, email, organization, onClick })
         </div>
       </div>
       <div className="flex justify-center">
-        <div className="flex justify-between items-center w-6/12">
+        <div className="flex justify-between gap-4 items-center w-6/12">
           <div
             className="py-12 px-6 rounded-lg min-h-80 w-80 cursor-pointer"
             style={{ boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.25)" }}
