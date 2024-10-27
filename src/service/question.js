@@ -31,3 +31,7 @@ export const getOneQuestion = async (id) => {
 export const flagQuestion = async (id) => {
   return await apiRequest(() => axiosInstance.post(`/api/questions/${id}/flag`));
 };
+
+export const deleteQuestion = async (id) => {
+  return await apiRequest(() => axiosInstance.delete(`/api/questions/${id}`));
+};
