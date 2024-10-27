@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+import { generateLecture } from "@/service/lecture";
 
 function AddLecture() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -54,13 +54,7 @@ function AddLecture() {
     formData.append("file", selectedFile);
 
     try {
-      const token = import.meta.env.VITE_BRAINSTATION_TOKEN;
-      const response = await axios.post(`${import.meta.env.VITE_BRAINSTATION_BE_URL}/api/lectures/upload`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          "Authorization": `Bearer ${token}`
-        }
-      });
+      const response = await generateLecture(formData);
 
       if (response.data) {
         setSuccessMessage("Lecture generated successfully!");
