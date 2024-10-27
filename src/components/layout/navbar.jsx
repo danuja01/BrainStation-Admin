@@ -1,11 +1,15 @@
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { logout } from "@/service/auth";
 import Logo from "../common/logo";
 
 const Navbar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   // State to control the visibility of the dropdown
   const [dropdownVisible, setDropdownVisible] = useState(false);
+
+  const name = localStorage.getItem("userName").split(" ")[0] || "User";
 
   // Toggle dropdown visibility
   const toggleDropdown = () => {
@@ -13,6 +17,19 @@ const Navbar = () => {
   };
 
   const isAdminPortal = location.pathname.includes("admin-portal");
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+
+      localStorage.removeItem("token");
+      localStorage.removeItem("refresh_token");
+
+      navigate("/login");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
 
   return (
     <div
@@ -47,7 +64,7 @@ const Navbar = () => {
               alt="User"
               className="w-8 h-8 rounded-full"
             />
-            <span className="font-josfin-sans text-sm">Hi, Danuja</span>
+            <span className="font-josfin-sans text-sm">Hi, {name}</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -75,7 +92,7 @@ const Navbar = () => {
                 <li>
                   <button
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
-                    onClick={() => console.log("Logout clicked")}
+                    onClick={handleLogout}
                   >
                     Logout
                   </button>
