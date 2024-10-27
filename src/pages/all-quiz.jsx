@@ -95,6 +95,7 @@ const AllQuiz = () => {
                 questionId={quiz._id}
                 questionNumber={index + 1}
                 question={quiz.question}
+                alternativeQuestions={quiz.alternative_questions}
                 answer={quiz.answer}
                 distractors={quiz.distractors}
               />
