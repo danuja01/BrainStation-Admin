@@ -4,9 +4,19 @@ import DeleteIcon from "../icons/delete-icon";
 import EditIcon from "../icons/edit-icon";
 import EditPopup from "../popups/edit-quizzes";
 
-const AllQuizCard = ({ questionId, questionNumber, question, answer, distractors, disableBtns = false }) => {
+const AllQuizCard = ({
+  questionId,
+  questionNumber,
+  question,
+  answer,
+  distractors,
+  disableBtns = false,
+  alternativeQuestions
+}) => {
   const location = useLocation();
   const [showEditPopup, setShowEditPopup] = useState(false);
+  const [showAlternatives, setShowAlternatives] = useState(false);
+  const [showDistractors, setShowDistractors] = useState(false);
 
   const isSpecialPage = location.pathname === "/admin-portal/flagged-quiz";
 
@@ -18,29 +28,69 @@ const AllQuizCard = ({ questionId, questionNumber, question, answer, distractors
     setShowEditPopup(false);
   };
 
+  const toggleAlternatives = () => setShowAlternatives(!showAlternatives);
+  const toggleDistractors = () => setShowDistractors(!showDistractors);
+
   return (
     <div
       className={`relative rounded-xl p-8 mx-1.5 my-4 ${isSpecialPage ? "bg-red-100" : "bg-white"}`}
       style={{ boxShadow: "0px 0px 4.4px rgba(0, 0, 0, 0.15)" }}
     >
-      <p className="uppercase text-green-500 font-semibold absolute top-2 right-3">AI Generated</p>
+      <p className="uppercase text-xs text-green-500 font-semibold absolute bottom-2 right-3">AI Generated</p>
       <p className="absolute top-2 left-3 text-xs font-semibold text-gray-400">{questionNumber}</p>
-      <p className="font-semibold text-lg">
-        Question: <span className="text-md font-normal">{question}</span>
-      </p>
-      <p className="font-semibold text-lg">
-        Answer: <span className="text-md font-normal">{answer}</span>
-      </p>
-      <p className="font-semibold text-lg">Distractors: </p>
-      <ul className="list-disc ml-10 font-inter">
-        {distractors.map((distractor, index) => (
-          <li key={index}>{distractor}</li>
-        ))}
-      </ul>
+
+      <div className="mb-4">
+        <p className="font-semibold text-lg text-gray-700">Question:</p>
+        <p className="text-md font-normal text-gray-800 ml-4">{question}</p>
+      </div>
+
+      <div className="mb-4">
+        <p className="font-semibold text-lg text-gray-700">Answer:</p>
+        <p className="text-md font-normal text-gray-800 ml-4">{answer}</p>
+      </div>
+
+      <div className="mb-4">
+        <div
+          onClick={toggleAlternatives}
+          className="flex justify-between items-center cursor-pointer bg-gray-200 p-2 rounded-md"
+        >
+          <p className="font-semibold text-lg text-gray-700">Alternative Questions:</p>
+          <span className="text-sm text-blue-600 font-semibold">{showAlternatives ? "-" : "+"}</span>
+        </div>
+        {showAlternatives && (
+          <ul className="space-y-2 bg-gray-100 rounded-lg p-4 mt-2">
+            {alternativeQuestions.map((altQuestion, index) => (
+              <li key={index} className="bg-gray-50 text-gray-700 p-2 rounded-md border border-gray-300">
+                {altQuestion}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      <div>
+        <div
+          onClick={toggleDistractors}
+          className="flex justify-between items-center cursor-pointer bg-gray-200 p-2 rounded-md"
+        >
+          <p className="font-semibold text-lg text-gray-700">Distractors:</p>
+          <span className="text-sm text-blue-600 font-semibold">{showDistractors ? "-" : "+"}</span>
+        </div>
+        {showDistractors && (
+          <ul className="space-y-2 bg-gray-100 rounded-lg p-4 mt-2">
+            {distractors.map((distractor, index) => (
+              <li key={index} className="bg-gray-50 text-gray-700 p-2 rounded-md border border-gray-300">
+                {distractor}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
       {!disableBtns && (
         <>
-          <div className="absolute bottom-0 right-0">
-            <div className="flex">
+          <div className="absolute top-2 right-2">
+            <div className="flex ">
               <EditIcon onClick={handleEditClick} />
               <DeleteIcon />
             </div>
@@ -51,6 +101,7 @@ const AllQuizCard = ({ questionId, questionNumber, question, answer, distractors
               questionId={questionId}
               question={question}
               answer={answer}
+              alternativeQuestions={alternativeQuestions}
               distractors={distractors}
             />
           )}
