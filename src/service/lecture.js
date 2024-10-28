@@ -17,7 +17,7 @@ export const getLectureById = async (id) => {
 };
 
 export const updateLecture = async (id, data) => {
-  return await apiRequest(() => axiosInstance.put(`api/lectures/${id}`, data));
+  return await apiRequest(() => axiosInstance.patch(`api/lectures/${id}`, data));
 };
 
 export const deleteLecture = async (id) => {

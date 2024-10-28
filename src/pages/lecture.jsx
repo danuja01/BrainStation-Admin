@@ -27,6 +27,10 @@ const Lecture = () => {
     navigate(`/admin-portal/add-lecture/${moduleId}`);
   };
 
+  const navTomoduleStudents = () => {
+    navigate(`/admin-portal/module-students/${moduleId}`);
+  };
+
   return (
     <>
       {!lecturesData ? (
@@ -35,12 +39,20 @@ const Lecture = () => {
         <div className="p-4 px-6 h-[calc(100%-100px)]">
           <div className="flex justify-between items-center">
             <h1 className="font-inter font-bold text-2xl">{moduleName} - All Lectures</h1>
-            <button
-              className="bg-blue-900 hover:bg-blue-700 uppercase text-white font-bold py-2 px-4 rounded"
-              onClick={navToAddLecture}
-            >
-              Add Lectures
-            </button>
+            <div className="flex space-x-4">
+              <button
+                className="bg-blue-900 hover:bg-blue-700 uppercase text-white font-bold py-2 px-4 rounded"
+                onClick={navToAddLecture}
+              >
+                Add Lectures
+              </button>
+              <button
+                className="bg-blue-900 hover:bg-blue-700 uppercase text-white font-bold py-2 px-4 rounded"
+                onClick={navTomoduleStudents}
+              >
+                Enroll Students
+              </button>
+            </div>
           </div>
           {/* Lecture Cards */}
           <div className="mt-8 mx-20">

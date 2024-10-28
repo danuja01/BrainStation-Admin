@@ -22,6 +22,7 @@ const LectureCard = ({ lecture, slidesTot, lectureId }) => {
 
   const handleDeleteLec = async () => {
     await deleteLecture(lectureId);
+    window.location.reload();
   };
 
   return (
