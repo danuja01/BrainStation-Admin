@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 // Adjust this import path if needed
-import { getSessionsByUser, getTotalSessionDurationByUser } from "@/service/SessionService";
+import { getSessionsByUser, getSessionDataByUser } from "@/service/SessionService";
 // Ensure this path is correct
 import image01 from "../badges/01.png";
 import image02 from "../badges/02.png";
@@ -40,7 +40,8 @@ const ToggleTabs = ({ userId }) => {
           const response = await getSessionsByUser(userId);
           setSessionLogs(response.data.docs || []);
         } else if (activeTab === "Session Overview" && userId) {
-          const response = await getTotalSessionDurationByUser(userId);
+          const response = await getSessionDataByUser(userId);
+          console.log('response', response);
           setSessionOverview(response.data);
         }
       } catch (error) {
@@ -175,7 +176,7 @@ const ToggleTabs = ({ userId }) => {
         {/* Popup for Session Logs Details */}
         {showPopup && selectedSession && (
           <SessionLogs onClose={() => setShowPopup(false)}>
-            <ScrollView initialMaxHeight="10rem">
+            <ScrollView initialMaxHeight="12rem">
               <div className="p-4">
                 <h3 className="text-2xl text-center font-bold mb-2">Session Details</h3>
                 <div className="flex justify-center my-12">
