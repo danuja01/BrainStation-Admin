@@ -14,6 +14,7 @@ import BarChart from "../charts/bar-chart";
 import PieChart from "../charts/pie-chart";
 import ScrollView from "../common/scrollable-view";
 import SessionLogs from "../popups/session-logs";
+import Loader from "/src/components/common/loader";
 
 const ToggleTabs = ({ userId }) => {
   const [activeTab, setActiveTab] = useState("Session Overview");
@@ -105,44 +106,53 @@ const ToggleTabs = ({ userId }) => {
         {activeTab === "Session Overview" && (
           <>
             {loading ? (
-              <p>Loading session overview...</p>
+              <div>
+                <Loader />
+              </div>
             ) : error ? (
               <p>Error: {error.message}</p>
             ) : (
               sessionOverview && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Bar chart for Study Time and Focus Time */}
-                  <div className="bg-white p-4 rounded-lg shadow-md">
-                    <h3 className="text-lg font-semibold mb-2">Study vs Focus Time</h3>
-                    <BarChart
-                      data={[
-                        { label: "Total Study Time", value: sessionOverview.totalStudyTime },
-                        { label: "Total Focus Time", value: sessionOverview.totalFocusTime }
-                      ]}
-                    />
-                  </div>
+                <ScrollView initialMaxHeight="18rem">
+                  {" "}
+                  {/* Add ScrollView here */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Bar chart for Study Time and Focus Time */}
+                    <div className="bg-white p-4 rounded-lg shadow-md">
+                      <h3 className="text-lg font-semibold mb-2">Study vs Focus Time</h3>
+                      <BarChart
+                        data={[
+                          {
+                            label: "Total Study Time (hrs)",
+                            value: (sessionOverview.totalStudyTime / 3600).toFixed(2)
+                          },
+                          { label: "Total Focus Time (hrs)", value: (sessionOverview.totalFocusTime / 3600).toFixed(2) }
+                        ]}
+                      />
+                    </div>
 
-                  {/* Bar chart for Movements */}
-                  <div className="bg-white p-4 rounded-lg shadow-md">
-                    <h3 className="text-lg font-semibold mb-2">Movements Overview</h3>
-                    <BarChart
-                      data={[
-                        { label: "Total Movements", value: sessionOverview.totalMovements },
-                        { label: "Total Erratic Movements", value: sessionOverview.totalErraticMovements }
-                      ]}
-                    />
-                  </div>
+                    {/* Bar chart for Movements */}
+                    <div className="bg-white p-4 rounded-lg shadow-md">
+                      <h3 className="text-lg font-semibold mb-2">Movements Overview</h3>
+                      <BarChart
+                        data={[
+                          { label: "Total Movements", value: sessionOverview.totalMovements },
+                          { label: "Total Erratic Movements", value: sessionOverview.totalErraticMovements }
+                        ]}
+                      />
+                    </div>
 
-                  {/* ADHD Classification Image */}
-                  <div className="flex justify-center items-center bg-white p-4 rounded-lg shadow-md col-span-1 md:col-span-2">
-                    <h3 className="text-lg font-semibold mb-2">ADHD Classification:</h3>
-                    <img
-                      src={getImageSource(sessionOverview.adhdClassification)}
-                      alt={sessionOverview.adhdClassification}
-                      className="w-80"
-                    />
+                    {/* ADHD Classification Image */}
+                    <div className="flex justify-center items-center bg-white p-4 rounded-lg shadow-md col-span-1 md:col-span-2">
+                      <h3 className="text-lg font-semibold mb-2">ADHD Classification:</h3>
+                      <img
+                        src={getImageSource(sessionOverview.adhdClassification)}
+                        alt={sessionOverview.adhdClassification}
+                        className="w-80"
+                      />
+                    </div>
                   </div>
-                </div>
+                </ScrollView>
               )
             )}
           </>
