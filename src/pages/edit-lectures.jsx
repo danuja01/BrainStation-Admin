@@ -111,10 +111,20 @@ const SlideEditor = () => {
 
   const handleRemoveSlide = () => {
     if (selectedSlide) {
-      setSlides((prevSlides) => prevSlides.filter((slide) => slide._id !== selectedSlide._id));
-      setSelectedSlide(null);
-      setEditorContent("");
-      setSlideTitle("");
+      setSlides((prevSlides) => {
+        const updatedSlides = prevSlides.filter((slide) => slide._id !== selectedSlide._id);
+        if (updatedSlides.length > 0) {
+          setSelectedSlide(updatedSlides[0]);
+          setEditorContent(updatedSlides[0].content);
+          setSlideTitle(updatedSlides[0].title);
+          setOriginalContent(updatedSlides[0].content);
+        } else {
+          setSelectedSlide(null);
+          setEditorContent("");
+          setSlideTitle("");
+        }
+        return updatedSlides;
+      });
     }
   };
 
