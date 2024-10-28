@@ -13,7 +13,7 @@ export const addQuestionBulk = async (data) => {
 };
 
 export const updateQuestion = async (id, data) => {
-  return await apiRequest(() => axiosInstance.put(`/api/questions/${id}`, data));
+  return await apiRequest(() => axiosInstance.patch(`/api/questions/${id}`, data));
 };
 
 export const getQuestions = async (params = {}) => {
@@ -30,4 +30,8 @@ export const getOneQuestion = async (id) => {
 
 export const flagQuestion = async (id) => {
   return await apiRequest(() => axiosInstance.post(`/api/questions/${id}/flag`));
+};
+
+export const deleteQuestion = async (id) => {
+  return await apiRequest(() => axiosInstance.delete(`/api/questions/${id}`));
 };
