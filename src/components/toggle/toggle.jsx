@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { Bar, BarChart, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { useMemo } from "react";
+// Add this import if not already present
+// import BarChart from "../charts/bar-chart";
+import { Bar, BarChart, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 // Adjust this import path if needed
 import { getSessionDataByUser, getSessionsByUser } from "@/service/SessionService";
 // Ensure this path is correct
@@ -11,8 +14,6 @@ import image05 from "../badges/05.png";
 import image06 from "../badges/06.png";
 import image07 from "../badges/07.png";
 import image08 from "../badges/08.png";
-// import BarChart from "../charts/bar-chart";
-import PieChart from "../charts/pie-chart";
 import ScrollView from "../common/scrollable-view";
 import SessionLogs from "../popups/session-logs";
 import Loader from "/src/components/common/loader";
@@ -32,6 +33,15 @@ const ToggleTabs = ({ userId }) => {
     { name: "Session Logs" },
     { name: "System Usage" }
   ];
+
+  const transformedEmotionData = useMemo(() => {
+    return selectedSession && selectedSession.emotion_distribution
+      ? Object.entries(selectedSession.emotion_distribution).map(([emotion, value]) => ({
+          emotion,
+          value: parseFloat(value.toFixed(2))
+        }))
+      : [];
+  }, [selectedSession]);
 
   // Fetch session data
   useEffect(() => {
@@ -227,14 +237,25 @@ const ToggleTabs = ({ userId }) => {
                   </div>
 
                   {/* Bar chart for Movements */}
+
                   <div className="w-1/2 flex flex-col items-center p-6 shadow mx-4">
                     <p className="text-center font-bold mb-3 text-lg">Movements</p>
-                    <BarChart
-                      data={[
-                        { label: "Total Movements", value: selectedSession.total_movements || 0 },
-                        { label: "Erratic Movements", value: selectedSession.erratic_movements || 0 }
-                      ]}
-                    />
+                    <ResponsiveContainer width="100%" height={200}>
+                      <BarChart
+                        data={[
+                          { name: "Total Movements", value: selectedSession.total_movements || 0 },
+                          { name: "Erratic Movements", value: selectedSession.erratic_movements || 0 }
+                        ]}
+                      >
+                        <XAxis dataKey="name" tick={{ fill: "#4A5568", fontSize: 12 }} />
+                        <YAxis tick={{ fill: "#4A5568", fontSize: 12 }} />
+                        <Tooltip />
+                        <Bar dataKey="value" fill="#F87171" radius={[8, 8, 0, 0]}>
+                          <Cell key="total" fill="#F87171" />
+                          <Cell key="erratic" fill="#DC2626" />
+                        </Bar>
+                      </BarChart>
+                    </ResponsiveContainer>
                     <p className="text-center mt-4 text-red-500">
                       Erratic Percentage:{" "}
                       {selectedSession.erratic_percentage ? selectedSession.erratic_percentage.toFixed(2) : "N/A"}%
@@ -244,8 +265,35 @@ const ToggleTabs = ({ userId }) => {
                 <div className="flex">
                   <div className="w-1/2 shadow p-6 mx-4 flex flex-col justify-center items-center">
                     <p className="text-center font-bold mb-3 text-lg">Emotion Distribution:</p>
-                    <div className="w-60">
-                      <PieChart data={selectedSession.emotion_distribution || []} />
+                    <div className="w-full">
+                      <ResponsiveContainer width="100%" height={250}>
+                        <PieChart>
+                          {transformedEmotionData.length > 0 ? (
+                            <Pie
+                              data={transformedEmotionData}
+                              dataKey="value"
+                              nameKey="emotion"
+                              cx="50%"
+                              cy="50%"
+                              outerRadius={80}
+                              fill="#8884d8"
+                              label
+                            >
+                              {transformedEmotionData.map((entry, index) => (
+                                <Cell
+                                  key={`cell-${index}`}
+                                  fill={["#FFBB28", "#FF8042", "#0088FE", "#00C49F"][index % 4]}
+                                />
+                              ))}
+                            </Pie>
+                          ) : (
+                            <text x="50%" y="50%" textAnchor="middle" dominantBaseline="middle" fill="#8884d8">
+                              No data available
+                            </text>
+                          )}
+                          <Tooltip />
+                        </PieChart>
+                      </ResponsiveContainer>
                     </div>
                   </div>
                   <div className="w-1/2 flex flex-col items-center shadow p-6 mx-4">
