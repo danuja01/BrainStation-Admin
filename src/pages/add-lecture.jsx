@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import Loader from "@/components/common/Loader";
 import { generateLecture } from "@/service/lecture";
 
 function AddLecture() {
@@ -55,16 +57,14 @@ function AddLecture() {
 
     try {
       const response = await generateLecture(formData);
-
       if (response.data) {
-        setSuccessMessage("Lecture generated successfully!");
-        navigate(`/admin-portal/module/${moduleId}`);
+        toast.done("Lecture generated successfully!");
+        navigate(`/admin-portal/edit-lecture/${response.data._id}`);
       } else {
-        setErrorMessage(`Error: ${response.data.message}`);
+        toast.error("Lecture generation failed! Please try again later.");
       }
     } catch (error) {
-      console.error("Error generating lecture:", error);
-      setErrorMessage("An error occurred while generating the lecture.");
+      toast.error("Lecture generation failed! Please try again later.");
     } finally {
       setLoading(false);
     }
@@ -72,6 +72,11 @@ function AddLecture() {
 
   return (
     <div className="p-4 px-6">
+      {loading && (
+        <div className="fixed inset-0 bg-white flex items-center justify-center z-50">
+          <Loader />
+        </div>
+      )}
       <div className="flex justify-center">
         <div className="border rounded-lg w-7/12 py-4 px-6" style={{ boxShadow: "0px 0px 4.4px rgba(0, 0, 0, 0.3)" }}>
           <div>
@@ -135,7 +140,7 @@ function AddLecture() {
               disabled={loading}
               className="text-white text-lg bg-blue-900 hover:bg-blue-700 cursor-pointer rounded-lg py-2 px-6"
             >
-              {loading ? "Generating..." : "Generate Lecture"}
+              Generate Lecture
             </button>
           </div>
         </div>
