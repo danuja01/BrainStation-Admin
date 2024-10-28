@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 // Adjust this import path if needed
 import { getSessionDataByUser, getSessionsByUser } from "@/service/SessionService";
-import Loader from "/src/components/common/loader";
-
-
 // Ensure this path is correct
 import image01 from "../badges/01.png";
 import image02 from "../badges/02.png";
@@ -17,6 +14,7 @@ import BarChart from "../charts/bar-chart";
 import PieChart from "../charts/pie-chart";
 import ScrollView from "../common/scrollable-view";
 import SessionLogs from "../popups/session-logs";
+import Loader from "/src/components/common/loader";
 
 const ToggleTabs = ({ userId }) => {
   const [activeTab, setActiveTab] = useState("Session Overview");
@@ -108,19 +106,26 @@ const ToggleTabs = ({ userId }) => {
         {activeTab === "Session Overview" && (
           <>
             {loading ? (
-              <div><Loader /></div>
+              <div>
+                <Loader />
+              </div>
             ) : error ? (
               <p>Error: {error.message}</p>
             ) : (
               sessionOverview && (
-                <ScrollView initialMaxHeight="18rem"> {/* Add ScrollView here */}
+                <ScrollView initialMaxHeight="18rem">
+                  {" "}
+                  {/* Add ScrollView here */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Bar chart for Study Time and Focus Time */}
                     <div className="bg-white p-4 rounded-lg shadow-md">
                       <h3 className="text-lg font-semibold mb-2">Study vs Focus Time</h3>
                       <BarChart
                         data={[
-                          { label: "Total Study Time (hrs)", value: (sessionOverview.totalStudyTime / 3600).toFixed(2) },
+                          {
+                            label: "Total Study Time (hrs)",
+                            value: (sessionOverview.totalStudyTime / 3600).toFixed(2)
+                          },
                           { label: "Total Focus Time (hrs)", value: (sessionOverview.totalFocusTime / 3600).toFixed(2) }
                         ]}
                       />
@@ -152,7 +157,6 @@ const ToggleTabs = ({ userId }) => {
             )}
           </>
         )}
-
 
         {/* Session Logs Tab */}
         {activeTab === "Session Logs" && (
