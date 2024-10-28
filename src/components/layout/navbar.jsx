@@ -9,7 +9,7 @@ const Navbar = () => {
   // State to control the visibility of the dropdown
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
-  const name = localStorage.getItem("userName").split(" ")[0] || "User";
+  const name = localStorage.getItem("userName")?.split(" ")[0] || "User";
 
   // Toggle dropdown visibility
   const toggleDropdown = () => {

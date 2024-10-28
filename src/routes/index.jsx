@@ -10,6 +10,7 @@ import FlaggedQuiz from "@/pages/flagged-quiz";
 import Lecture from "@/pages/lecture";
 import Login from "@/pages/login";
 import MetricsPage from "@/pages/metrics";
+import ModuleUsers from "@/pages/module-students";
 import Profile from "@/pages/profiles";
 import Signup from "@/pages/signup";
 import Users from "@/pages/users";
@@ -66,9 +67,14 @@ const coreRoutes = [
     component: AddLecture
   },
   {
-    path: "admin-portal/edit-lecture",
+    path: "edit-lecture/:lectureId",
     title: "edit-lecture",
     component: SlideEditor
+  },
+  {
+    path: "module-students/:moduleId",
+    title: "module-students",
+    component: ModuleUsers
   }
 ];
 
