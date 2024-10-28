@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 // Adjust this import path if needed
-import { getSessionsByUser, getSessionDataByUser } from "@/service/SessionService";
+import { getSessionDataByUser, getSessionsByUser } from "@/service/SessionService";
 // Ensure this path is correct
 import image01 from "../badges/01.png";
 import image02 from "../badges/02.png";
@@ -41,7 +41,7 @@ const ToggleTabs = ({ userId }) => {
           setSessionLogs(response.data.docs || []);
         } else if (activeTab === "Session Overview" && userId) {
           const response = await getSessionDataByUser(userId);
-          console.log('response', response);
+          console.log("response", response);
           setSessionOverview(response.data);
         }
       } catch (error) {
