@@ -47,6 +47,8 @@ const AllQuizCard = ({
   };
 
   const confirmDelete = async () => {
+    console.log("questionId", questionId);
+
     try {
       const response = await deleteQuestionService(questionId);
       if (response.success) {
